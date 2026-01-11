@@ -1,0 +1,37 @@
+services:
+#Service to build dLEM image
+  dlem-build:
+    image: dlem
+    build: .
+    command: ["uv", "build", "--sdist", "--wheel"]
+    volumes:
+      - ./dist:/dlem/dist
+    user: root
+#Service to develop dLEM
+  dlem-dev:
+    user: root
+    image: dlem
+    command: ["tail", "-F", "/dev/null"]
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /dlem
+          ignore:
+            - .venv/
+        - action: rebuild
+          path: ./uv.lock
+#Service to run test for dLEM
+  dlem-test:
+    image: dlem
+    user: nonroot
+    command: >
+      bash -c uv sync && pytest -k "test_dlem"
+#Service to run dLEM with own data
+  dlem:
+    image: dlem
+    user: nonroot
+    volumes:
+      - ./input_data:/dlem/data
+    command: >
+      dlem data/test_data.cool data/test_out

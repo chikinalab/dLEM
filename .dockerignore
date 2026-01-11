@@ -1,0 +1,18 @@
+data
+tests/*.cool
+site/*
+.venv
+
+# Ignore common version control directories
+.git
+.svn
+
+node_modules
+/build
+/dist
+pkg/
+
+# Ignore IDE/OS specific files
+.vscode
+.idea
+.DS_Store

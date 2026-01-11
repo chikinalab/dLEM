@@ -1,0 +1,40 @@
+name: Publish Python Package to PyPI
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  pypi-publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+    steps:
+
+      # - name: Maximize build space
+      #   uses: easimon/maximize-build-space@master
+      #   with:
+      #     root-reserve-mb: 512
+      #     swap-size-mb: 1024
+      #     remove-dotnet: 'true'
+          
+      - name: Checkout repository
+        uses: actions/checkout@v4
+  
+      - name: Build the Image
+        run: docker compose build
+
+      - name: Run tests
+        run: docker compose up -d dlem-test
+
+      - name: Publish package distributions to TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/ # https://upload.pypi.org/legacy/
+          packages-dir: dist/
+    
