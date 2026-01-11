@@ -5,7 +5,7 @@ services:
     build: .
     command: ["uv", "build", "--sdist", "--wheel"]
     volumes:
-      - ./dist:/dlem/dist
+      - "${REPO_DIR}/dist:/dlem/dist"
     user: root
 #Service to develop dLEM
   dlem-dev:
