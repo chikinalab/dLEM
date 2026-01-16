@@ -3,15 +3,16 @@ name = "dlem"
 version = "0.1.0"
 description = "Tool to build, train, and use the differentiabel Loop Extrusion Model (dLEM)"
 readme = "README.md"
-requires-python = ">=3.10,<3.11"
+requires-python = ">=3.10,<=3.12"
 dependencies = [
     "cooler",
     "cython>=3.2.1",
     "hictkpy[all]>=1.4.0",
-    "jax>=0.6.2",
+    "jax>=0.6.2 ; sys_platform == 'windows'",
     "jax-cuda12-pjrt ; sys_platform == 'linux'",
     "jax-cuda12-plugin>=0.6.2 ; sys_platform == 'linux'",
     "jax-metal>=0.1.1 ; sys_platform == 'darwin'",
+    "jax[cuda12]>=0.6.2 ; sys_platform == 'linux'",
     "jaxlib>=0.6.2",
     "matplotlib>=3.10.7",
     "numpy",
@@ -58,3 +59,16 @@ dev = [
 
 [tool.pytest.ini_options]
 testpaths = [ "tests"]
+
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["osx-arm64", "linux-64"]
+
+[tool.pixi.pypi-dependencies]
+dlem = { path = ".", editable = true }
+
+[tool.pixi.environments]
+default = { solve-group = "default" }
+dev = { features = ["dev"], solve-group = "default" }
+
+[tool.pixi.tasks]

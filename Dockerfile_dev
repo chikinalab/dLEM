@@ -1,0 +1,14 @@
+# DLEM dev image
+FROM dlem-build
+
+RUN groupadd --system --gid 999 nonroot \
+ && useradd --system --gid 999 --uid 999 --create-home nonroot
+
+ENV UV_NO_DEV=0
+RUN pixi import --format=conda-env dev_env.yml && \
+    uv sync --dev && \
+    uv clean
+
+ENTRYPOINT []
+
+CMD []

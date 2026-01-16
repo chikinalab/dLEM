@@ -1,16 +1,33 @@
 services:
+#Service to run dLEM with own data
+  dlem:
+    image: dlem
+    container_name: dlem
+    build:
+      context: .
+      dockerfile: Dockerfile_prod
+    volumes:
+      - ${IN_DATA_DIR}:/dlem/data/
+    command: >
+      dlem /dlem/data/${IN_DATA} /dlem/data/test_out
 #Service to build dLEM image
   dlem-build:
-    image: dlem
-    build: .
-    command: ["uv", "build", "--sdist", "--wheel"]
+    image: dlem-build
+    container_name: dlem-build
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - "${REPO_DIR}/dist:/dlem/dist"
     user: root
 #Service to develop dLEM
   dlem-dev:
     user: root
-    image: dlem
+    image: dlem-dev
+    container_name: dlem-dev
+    build:
+      context: .
+      dockerfile: Dockerfile_dev
     command: ["tail", "-F", "/dev/null"]
     develop:
       watch:
@@ -23,15 +40,8 @@ services:
           path: ./uv.lock
 #Service to run test for dLEM
   dlem-test:
-    image: dlem
-    user: nonroot
+    image: dlem-dev
+    container_name: dlem-test
+    user: root
     command: >
-      bash -c uv sync && pytest -k "test_dlem"
-#Service to run dLEM with own data
-  dlem:
-    image: dlem
-    user: nonroot
-    volumes:
-      - ./input_data:/dlem/data
-    command: >
-      dlem data/test_data.cool data/test_out
+      pytest -k "test_dlem_synthetic"
