@@ -19,4 +19,4 @@ USER nonroot
 
 WORKDIR /dlem
 
-CMD ["dlem"]
+ENTRYPOINT ["dlem"]
