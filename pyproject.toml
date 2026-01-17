@@ -72,3 +72,9 @@ default = { solve-group = "default" }
 dev = { features = ["dev"], solve-group = "default" }
 
 [tool.pixi.tasks]
+
+[tool.pixi.feature.dev]
+channels = ["conda-forge", "bioconda", "main", "r", "msys2"]
+
+[tool.pixi.feature.dev.dependencies]
+hictk = ">=2.2.0,<3"
