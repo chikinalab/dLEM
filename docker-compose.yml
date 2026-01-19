@@ -6,10 +6,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile_prod
+    depends_on:
+      dlem-build:
+        condition: service_completed_successfully
     volumes:
       - ${IN_DATA_DIR}:/dlem/data/
-    command: >
-      dlem /dlem/data/${IN_DATA} /dlem/data/test_out
+    command: --help
 #Service to build dLEM image
   dlem-build:
     image: dlem-build
@@ -17,6 +19,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    command: uv build --sdist --wheel
     volumes:
       - "${REPO_DIR}/dist:/dlem/dist"
     user: root
@@ -28,6 +31,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile_dev
+    depends_on:
+      dlem-build:
+        condition: service_completed_successfully
     command: ["tail", "-F", "/dev/null"]
     develop:
       watch:
@@ -42,6 +48,9 @@ services:
   dlem-test:
     image: dlem-dev
     container_name: dlem-test
-    user: root
+    user: nonroot
     command: >
-      pytest -k "test_dlem_synthetic"
+      pixi run --environment dev pytest -k "test_dlem_synthetic"
+    depends_on:
+      dlem-build:
+        condition: service_completed_successfully

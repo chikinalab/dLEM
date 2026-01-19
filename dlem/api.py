@@ -15,7 +15,6 @@ import pyarrow
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from rich.progress import track
-#from cooltools.lib.numutils import adaptive_coarsegrain
 
 from dlem.core import (
     _block_until_ready,

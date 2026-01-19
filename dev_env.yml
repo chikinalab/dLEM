@@ -1,7 +1,0 @@
-name: dev
-channels:
-  - conda-forge
-  - bioconda
-  - defaults
-dependencies:
-  - hictk

@@ -2,10 +2,7 @@
 FROM debian:stable-slim
 
 ENV APT_PACKAGES=" \
-#		apt-transport-https \
 		ca-certificates \
-#		locales \
-#		fonts-liberation \
 		zlib1g \
 		zlib1g-dev \
 		build-essential \
@@ -58,8 +55,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 
 COPY . /dlem
 RUN --mount=type=cache,target=/root/.cache/uv \ 
-    uv sync --locked && \
-    uv build --sdist --wheel
+    uv sync --locked
 ENV PATH="/dlem/.venv/bin:$PATH"
 
 ENTRYPOINT []
