@@ -30,12 +30,9 @@ RUN apt-get update && \
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     echo $TZ > /etc/timezone
 
-ENV PIXI_HOME="/opt/pixi"
-ENV PATH=${PIXI_HOME}/bin:$PATH
-RUN curl -fsSL https://pixi.sh/install.sh | sh && \
-	echo 'eval "$(pixi completion --shell bash)"' > ${BASH_EN} && \
-	source ${BASH_EN} && \
-	pixi global install -c conda-forge uv
+ADD https://astral.sh/uv/install.sh /uv-installer.sh
+RUN sh /uv-installer.sh && rm /uv-installer.sh
+ENV PATH="/root/.local/bin/:$PATH"
 
 # UV options
 ENV UV_COMPILE_BYTECODE=1
