@@ -16,27 +16,24 @@ jobs:
       name: pypi
     steps:
 
-      # - name: Maximize build space
-      #   uses: easimon/maximize-build-space@master
-      #   with:
-      #     root-reserve-mb: 512
-      #     swap-size-mb: 1024
-      #     remove-dotnet: 'true'
-          
       - name: Checkout repository
         uses: actions/checkout@v4
-  
-      - name: Build the Image
+
+      - name: Create .env
+        run: |
+          echo "REPO_DIR=${{ variables.REPO_DIR }}" > .env
+          ls -la 
+        shell: bash
+
+      - name: Build the Image and Create Distributions
         run: |
           docker compose build dlem-build
           docker compose up dlem-build
-
-#      - name: Run tests
-#        run: docker compose up -d dlem-test
+          ls -la
 
       - name: Publish package distributions to TestPyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           repository-url: https://test.pypi.org/legacy/ # https://upload.pypi.org/legacy/
-          packages-dir: dist/
+          packages-dir: ${{ variables.REPO_DIR }}/dist
     
