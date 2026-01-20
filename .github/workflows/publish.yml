@@ -27,7 +27,9 @@ jobs:
         uses: actions/checkout@v4
   
       - name: Build the Image
-        run: docker compose build dlem-build
+        run: |
+          docker compose build dlem-build
+          docker compose up dlem-build
 
 #      - name: Run tests
 #        run: docker compose up -d dlem-test
