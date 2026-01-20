@@ -51,6 +51,3 @@ services:
     user: root
     command: >
       pixi run --environment dev pytest -k "test_dlem_drem_small or test_dlem_drem_medium or test_dlem_synthetic"
-    depends_on:
-      dlem-build:
-        condition: service_completed_successfully
