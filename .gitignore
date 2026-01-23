@@ -6,3 +6,6 @@ tests/__pycache__
 tests/*.mcool
 tests/*.tsv
 data/
+# pixi environments
+.pixi/*
+!.pixi/config.toml

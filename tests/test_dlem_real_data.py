@@ -23,8 +23,8 @@ def test_dlem_drem_small(downloaded_data_dir):
 def test_dlem_drem_medium(downloaded_data_dir):
 # Medium test of DLEM using Drosophila data
     out_path = os.path.join(os.getcwd(),'tests','drosophila_test_medium')
-    in_bed = os.path.join(os.getcwd(),'tests', 'in_regions.bed')
     in_data = os.path.join(downloaded_data_dir, 'GSE263229_GlambdaLmerged_fix.mcool')
+    in_bed = os.path.join(os.getcwd(),'tests', 'in_regions.bed')
     print("Running DLEM against Drosophila regions in bed")
     print(f"{out_path} {in_data} {in_bed}")
     

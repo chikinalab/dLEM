@@ -6,6 +6,10 @@ This package provides functions to train, predict, and evaluate Differentiable L
 `uv tool install dlem`
 
 ## Contributing
+Install dev environment w/ Pixi:
+`pixi install --environment dev` 
+
+Contributing using Docker:
 `docker-compose build`
 `docker-compose up dlem-dev --watch`
 

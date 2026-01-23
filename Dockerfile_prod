@@ -1,0 +1,42 @@
+FROM debian:bookworm-slim AS build
+
+ENV APT_PACKAGES=" \
+		ca-certificates \
+		curl \
+        build-essential \
+		"
+
+USER root
+ENV BASH_EN=/${USER}/.bashrc
+
+# Set working directory
+ARG WORKDIR="/dlem"
+WORKDIR ${WORKDIR}
+
+#Get apt packages
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends ${APT_PACKAGES} && \
+    rm -rf "/var/lib/apt/lists/*" && \
+    apt-get clean && \
+    rm -rf /var/cache/apt
+
+ENV PIXI_HOME="/opt/pixi"
+ENV PATH=${PIXI_HOME}/bin:$PATH
+COPY . /dlem
+RUN curl -fsSL https://pixi.sh/install.sh | sh && \
+	export env PATH=${PIXI_HOME}/bin:$PATH && \
+    pixi install --locked && \
+    pixi shell-hook -s bash > /shell-hook && \
+    echo "#!/bin/bash" > /dlem/entrypoint.sh && \
+    cat /shell-hook >> /dlem/entrypoint.sh && \
+    echo 'exec "$@"' >> /dlem/entrypoint.sh
+
+FROM debian:bookworm-slim AS production
+WORKDIR /dlem
+COPY --from=build /dlem/.pixi/envs/default /dlem/.pixi/envs/default
+COPY --from=build --chmod=0755 /dlem/entrypoint.sh /dlem/entrypoint.sh
+COPY ./dlem /dlem/dlem
+
+ENTRYPOINT [ "/dlem/entrypoint.sh", "dlem" ]
+
+CMD [""]

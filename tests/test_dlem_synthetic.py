@@ -83,7 +83,7 @@ def test_dlem_synthetic_minimal():
 # Minimal test of DLEM using synthetic data
     out_name = "synthetic_data"
     synthetic_cool(out_name)
-    out_path = os.path.join(os.getcwd(),'tests','test_synthetic_out')
+    out_path = os.path.join(os.getcwd(),'tests','test_synthetic_minimal_out')
     in_data = os.path.join(os.getcwd(),'tests', f'{out_name}.cool')
     print("Running synthetic data through dlem")
     result = runner.invoke(dlem_cli, ["--debug",
@@ -107,7 +107,7 @@ def test_dlem_synthetic_medium():
                    num_rand_ints=num_rand_ints,
                    ct_mean=ct_mean,
                    chr_size=chr_size)
-    out_path = os.path.join(os.getcwd(),'tests','test_out')
+    out_path = os.path.join(os.getcwd(),'tests','test_synthetic_medium_out')
     in_data = os.path.join(os.getcwd(),'tests', f'{out_name}.cool')
     print("Running synthetic data through dlem")
     result = runner.invoke(dlem_cli, ["--debug",

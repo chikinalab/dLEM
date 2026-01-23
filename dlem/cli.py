@@ -356,7 +356,7 @@ def main(
         batched_result.append(
             train_dlem(cur_data[0:train_rows, :], 
                                             steps=steps,
-                                            start_row=0,
+                                            start_row=start_diag,
                                             slowdown=slowdown,
                                             learning_rate=learning_rate,
                                             train_steps=iterations,

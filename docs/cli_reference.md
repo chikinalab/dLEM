@@ -5,7 +5,7 @@ dLEM: differentiable Loop Extrusion Model
 **Usage**:
 
 ```console
-$ dLEM [OPTIONS] DNA_INTS OUTPUT_LOCATION
+$ dlem [OPTIONS] DNA_INTS OUTPUT_LOCATION
 ```
 
 **Arguments**:
