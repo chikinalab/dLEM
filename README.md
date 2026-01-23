@@ -105,9 +105,9 @@ All the above operations can be performed on both Cooler and .hic files and yiel
 ## Installation
 
 dLEM can be installed from pip using \
-Refer to the [Installation](https://hictk.readthedocs.io/en/stable/installation.html) section in the documentation for more information.
+Refer to the [Installation](https://dlem.readthedocs.io/en/stable/installation.html) section in the documentation for more information.
 
-`pip install dlem`
+`uv pip install dlem`
 
 ## Quickstart
 
@@ -118,7 +118,7 @@ dLEM: differentiable Loop Extrusion Model
 **Usage**:
 
 ```console
-$ dLEM [OPTIONS] DNA_INTS OUTPUT_LOCATION
+$ dlem [OPTIONS] DNA_INTS OUTPUT_LOCATION
 ```
 
 **Arguments**:

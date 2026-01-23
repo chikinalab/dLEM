@@ -19,19 +19,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create .env
         run: |
           echo "REPO_DIR=${{ vars.REPO_DIR }}" > .env
           echo "IN_DATA_DIR=${{ vars.IN_DATA_DIR }}" >> .env
-          ls -la 
         shell: bash
 
       - name: Build the Image and Create Distributions
         run: |
-          docker compose build dlem-build
+          docker compose build dlem-dev
           docker compose up dlem-build
-          ls -la
-
+          docker tag dlem ghcr.io/dborgesr/dlem:latest
+          docker push ghcr.io/dborgesr/dlem:latest
       - name: Publish package distributions to TestPyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:

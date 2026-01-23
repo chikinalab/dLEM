@@ -14,12 +14,9 @@ services:
     command: --help
 #Service to build dLEM image
   dlem-build:
-    image: dlem-build
+    image: dlem-dev
     container_name: dlem-build
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: uv build --sdist --wheel
+    command: pixi run build
     volumes:
       - "${REPO_DIR}/dist:/dlem/dist"
     user: root

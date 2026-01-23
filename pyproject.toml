@@ -8,11 +8,6 @@ dependencies = [
     "cooler",
     "cython>=3.2.1",
     "hictkpy[all]>=1.4.0",
-    "jax>=0.6.2 ; sys_platform == 'windows'",
-    "jax-cuda12-pjrt ; sys_platform == 'linux'",
-    "jax-cuda12-plugin>=0.6.2 ; sys_platform == 'linux'",
-    "jax-metal>=0.1.1 ; sys_platform == 'darwin'",
-    "jax[cuda12]>=0.6.2 ; sys_platform == 'linux'",
     "jaxlib>=0.6.2",
     "matplotlib>=3.10.7",
     "numpy",
@@ -54,7 +49,7 @@ dev = [
     "mkdocstrings[python]>=1.0.0",
     "pytest>=8.4.2",
     "requests>=2.32.5",
-    "sh>=2.2.2",
+    "sh>=2.2.2", "python-build>=0.2.13,<0.3", "ruff>=0.14.13,<0.15",
 ]
 
 [tool.pytest.ini_options]
@@ -78,3 +73,17 @@ channels = ["conda-forge", "bioconda", "main", "r", "msys2"]
 
 [tool.pixi.feature.dev.dependencies]
 hictk = ">=2.2.0,<3"
+uv = ">=0.9.26,<0.10"
+
+[tool.pixi.feature.dev.tasks]
+build = "uv build --sdist --wheel"
+
+[tool.pixi.target.linux-64.pypi-dependencies]
+jax = { version = ">=0.9.0, <0.10", extras = ["cuda12"] }
+jax-cuda12-pjrt = ">=0.9.0, <0.10"
+jax-cuda12-plugin = ">=0.9.0, <0.10"
+
+[tool.pixi.target.osx-arm64.pypi-dependencies]
+jax-metal = ">=0.1.1, <0.2"
+
+
