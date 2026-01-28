@@ -82,8 +82,3 @@ build = "uv build --sdist --wheel"
 jax = { version = ">=0.9.0, <0.10", extras = ["cuda12"] }
 jax-cuda12-pjrt = ">=0.9.0, <0.10"
 jax-cuda12-plugin = ">=0.9.0, <0.10"
-
-[tool.pixi.target.osx-arm64.pypi-dependencies]
-jax-metal = ">=0.1.1, <0.2"
-
-
