@@ -265,6 +265,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -307,23 +309,14 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Installation
-      
-    </span>
-  </a>
-  
-</li>
       
         <li class="md-nav__item">
   <a href="#from-pypi" class="md-nav__link">
@@ -341,6 +334,17 @@
     <span class="md-ellipsis">
       
         From source
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Container
       
     </span>
   </a>
@@ -591,23 +595,14 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Installation
-      
-    </span>
-  </a>
-  
-</li>
       
         <li class="md-nav__item">
   <a href="#from-pypi" class="md-nav__link">
@@ -631,6 +626,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Container
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -648,14 +654,15 @@
 
 
 
-<h2 id="installation">Installation</h2>
+<h1 id="installation">Installation</h1>
 <h2 id="from-pypi">From Pypi</h2>
+<p><code>pip install dlem</code></p>
 <p><code>uv pip install dlem</code></p>
-<h1 id="from-source">From source</h1>
-<p><code>git clone</code></p>
-<p><code>uv sync</code></p>
-<p>For autocompletion:</p>
-<p><code>uv tools install .</code></p>
+<h2 id="from-source">From source</h2>
+<p><code>git clone https://github.com/chikinalab/dLEM.git</code>
+<code>pixi install</code></p>
+<h2 id="container">Container</h2>
+<p><code>docker run ghcr.io/dborgesr/dlem:latest</code></p>
 
 
 
