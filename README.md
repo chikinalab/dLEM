@@ -109,7 +109,6 @@ From PyPI (latest release)
 - Create and activate an env (pick one):
   - Conda: `conda create -n dlem-env python=3.12 -y && conda activate dlem-env`
   - python -m venv: `python3 -m venv .venv && source .venv/bin/activate`
-  - uv venv: `uv venv && source .venv/bin/activate`
 - Upgrade tooling: `python -m pip install --upgrade pip setuptools wheel`
 - Install: `python -m pip install dlem`
 
@@ -118,7 +117,6 @@ From GitHub (most current)
 - Create and activate an env (pick one):
   - Conda: `conda create -n dlem-env python=3.12 -y && conda activate dlem-env`
   - python -m venv: `python3 -m venv .venv && source .venv/bin/activate`
-  - uv venv: `uv venv && source .venv/bin/activate`
 - Upgrade tooling: `python -m pip install --upgrade pip setuptools wheel`
 - Install: `python -m pip install .`
 
