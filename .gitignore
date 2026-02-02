@@ -6,6 +6,10 @@ tests/__pycache__
 tests/*.mcool
 tests/*.tsv
 data/
+# local shell history
+.local_bash_history.txt
+dlem/.local_bash_history.txt
+**/.local_bash_history.txt
 # pixi environments
 .pixi/*
 !.pixi/config.toml

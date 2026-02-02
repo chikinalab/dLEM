@@ -1,7 +1,7 @@
 
 
 # Documentation
-[Documentation](https://DreschLab.github.io/dlem)
+[Documentation](https://chikinalab.github.io/dLEM)
 
 
 <!--
@@ -104,10 +104,29 @@ All the above operations can be performed on both Cooler and .hic files and yiel
 
 ## Installation
 
-dLEM can be installed from pip using \
-Refer to the [Installation](https://dlem.readthedocs.io/en/stable/installation.html) section in the documentation for more information.
+From PyPI (latest release)
+- Requirements: Python 3.10–3.12, recent pip/setuptools/wheel.
+- Create and activate an env (pick one):
+  - Conda: `conda create -n dlem-env python=3.12 -y && conda activate dlem-env`
+  - python -m venv: `python3 -m venv .venv && source .venv/bin/activate`
+  - uv venv: `uv venv && source .venv/bin/activate`
+- Upgrade tooling: `python -m pip install --upgrade pip setuptools wheel`
+- Install: `python -m pip install dlem`
 
-`uv pip install dlem`
+From GitHub (most current)
+- Requirements: Python 3.10–3.12, recent pip/setuptools/wheel.
+- Create and activate an env (pick one):
+  - Conda: `conda create -n dlem-env python=3.12 -y && conda activate dlem-env`
+  - python -m venv: `python3 -m venv .venv && source .venv/bin/activate`
+  - uv venv: `uv venv && source .venv/bin/activate`
+- Upgrade tooling: `python -m pip install --upgrade pip setuptools wheel`
+- Install: `python -m pip install .`
+
+Install directly from GitHub (no local clone)
+- `python -m pip install --upgrade pip setuptools wheel`
+- `python -m pip install "git+https://github.com/chikinalab/dLEM.git"`
+
+Refer to the [Installation](https://dlem.readthedocs.io/en/stable/installation.html) section in the documentation for more information.
 
 ## Quickstart
 
