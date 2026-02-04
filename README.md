@@ -102,33 +102,7 @@ The CLI application and python library is capable of reading and writing files i
 
 All the above operations can be performed on both Cooler and .hic files and yield identical results.
 
-## Installation
-- Requirements: Python 3.10–3.12.
-
-- Create and activate an env (pick ONE):
-
-  - Conda:
-    `conda create -n dlem-env python=3.12 -y && conda activate dlem-env`
-
-  - Mamba/Micromamba:
-    `mamba create -n dlem-env python=3.12 -y && mamba activate dlem-env`
-
-  - python -m venv:
-    `python3 -m venv .venv && source .venv/bin/activate`
-
-  - uv:
-    `uv venv --python 3.12 && source .venv/bin/activate`
-
-- Install dlem (pick ONE):
-
-  - pip:
-    `python -m pip install -U pip && python -m pip install dlem`
-
-  - uv:
-    `uv pip install dlem`
-
-
-From GitHub (most current)
+## Installation (GitHub, most current)
 - Requirements: Python 3.10–3.12, recent pip/setuptools/wheel.
 - Create and activate an env (pick one):
   - Conda: `conda create -n dlem-env python=3.12 -y && conda activate dlem-env`
