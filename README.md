@@ -98,7 +98,7 @@ The CLI application and python library is capable of reading and writing files i
 
 ### Supported operations
 
-- Take chromatin looping data and define L and R cohesin parameters
+- Take chromatin conformation data and define L and R cohesin rate parameters
 
 All the above operations can be performed on both Cooler and .hic files and yield identical results.
 
@@ -110,11 +110,11 @@ All the above operations can be performed on both Cooler and .hic files and yiel
   - python -m venv: `python3 -m venv .venv && source .venv/bin/activate`
   - virtualenv: `python3 -m pip install --upgrade virtualenv && python3 -m virtualenv .venv && source .venv/bin/activate`
 - Upgrade tooling: `python -m pip install --upgrade pip setuptools wheel`
-- Install: `python -m pip install .`
-
-Install directly from GitHub (no local clone)
-- `python -m pip install --upgrade pip setuptools wheel`
-- `python -m pip install "git+https://github.com/chikinalab/dLEM.git"`
+- Option A: local checkout
+  - Clone and enter the repo: `git clone https://github.com/chikinalab/dLEM.git && cd dLEM`
+  - Install: `python -m pip install .`
+- Option B: direct from GitHub (no local clone)
+  - `python -m pip install "git+https://github.com/chikinalab/dLEM.git"`
 
 Refer to the [Installation](https://dlem.readthedocs.io/en/stable/installation.html) section in the documentation for more information.
 
