@@ -2,8 +2,8 @@
 This package provides functions to train, predict, and evaluate Differentiable Loop Extrusion Model (DLEM) on HiC/Micro-C experiments formated as mcool files.
 
 ## Installation:
-`uv pip install dlem`
-`uv tool install dlem`
+Requires Python 3.11-3.13
+`pip install dlem`
 
 ## Contributing
 Install dev environment w/ Pixi:
