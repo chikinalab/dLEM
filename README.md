@@ -63,7 +63,7 @@ This package provides functions to train, predict, and evaluate a Differentiable
 ### Supported operations
 - Take chromatin conformation data and define L and R cohesin rate parameters
 
-## Installation (GitHub, most current)
+## Installation
 - Requirements: Python 3.11–3.13
 - Create and activate an env (pick one):
   - Conda: `conda create -n dlem-env python=3.12 -y && conda activate dlem-env`
