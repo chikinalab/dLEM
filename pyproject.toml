@@ -3,11 +3,12 @@ name = "dlem"
 version = "0.1.0"
 description = "Tool to build, train, and use the differentiable Loop Extrusion Model (dLEM)"
 readme = "README.md"
-requires-python = ">=3.12,<3.13"
+requires-python = ">3.10,<=3.14"
 dependencies = [
     "cooler",
     "cython>=3.2.1",
     "hictkpy[all]>=1.4.0",
+    "jax>=0.9.0",
     "jaxlib>=0.6.2",
     "matplotlib>=3.10.7",
     "numpy",
@@ -21,6 +22,7 @@ dependencies = [
     "pyrle>=0.0.42",
     "pytest>=8.4.2",
     "requests>=2.32.5",
+    "rich>=13.0.0",
     "scipy",
     "typer>=0.19.2",
 ]
@@ -34,12 +36,11 @@ members = [
 dlem = "dlem.cli:dlem_cli"
 
 [build-system]
-requires = ["uv_build>=0.9.0,<0.10.0"]
-build-backend = "uv_build"
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
 
-[tool.uv.build-backend]
-module-name = "dlem"
-module-root = ""
+[tool.setuptools.packages.find]
+include = ["dlem*"]
 
 [dependency-groups]
 dev = [
