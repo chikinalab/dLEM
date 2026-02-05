@@ -65,17 +65,7 @@ This package provides functions to train, predict, and evaluate a Differentiable
 
 ## Installation
 - Requirements: Python 3.11–3.13
-- Create and activate an env (pick one):
-  - Conda: `conda create -n dlem-env python=3.12 -y && conda activate dlem-env`
-  - Mamba/Micromamba: `mamba create -n dlem-env python=3.12 -y && mamba activate dlem-env`
-  - python -m venv: `python3 -m venv .venv && source .venv/bin/activate`
-  - virtualenv: `python3 -m pip install --upgrade virtualenv && python3 -m virtualenv .venv && source .venv/bin/activate`
-- Upgrade tooling: `python -m pip install --upgrade pip setuptools wheel`
-- Option A: local checkout
-  - Clone and enter the repo: `git clone https://github.com/chikinalab/dLEM.git && cd dLEM`
-  - Install: `python -m pip install .`
-- Option B: direct from GitHub (no local clone)
-  - `python -m pip install "git+https://github.com/chikinalab/dLEM.git"`
+`pip install git+https://github.com/chikinalab/dLEM.git`
 
 Refer to the [Installation](https://chikinalab.github.io/dLEM/installation) section in the documentation for more information and how to contribute.
 
@@ -131,8 +121,10 @@ Refer to the [Quickstart (CLI)](https://chikinalab.github.io/dLEM/cli_usage) and
 `docker run ghcr.io/dborgesr/dlem:latest`
 
 ## Contributing
+`git clone https://github.com/chikinalab/dLEM.git`
+
 ### Using local pixi
-`pixi install`
+`pixi install -e`
 
 ### Using Docker
 `docker-compose build`
