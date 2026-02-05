@@ -21,7 +21,7 @@ SPDX-License-Identifier: MIT
       <td>Downloads</td>
       <td>
         <a href="https://github.com/users/dborgesr/packages/container/package/dlem">
-          <img src="https://img.shields.io/github/deployments/:dborgesr" alt="GithubPackage">
+          <img src="https://img.shields.io/badge/github-container-blue" alt="GithubRegistry">
         </a>
         &nbsp
       </td>
@@ -30,7 +30,7 @@ SPDX-License-Identifier: MIT
       <td>Documentation</td>
       <td>
         <a href="https://chikinalab.github.io/dLEM">
-          <img src="https://img.shields.io/readthedocs/:dLEM/:latest" alt="Documentation">
+          <img src="https://readthedocs.org/projects/dLEM/badge/?version=latest" alt="Documentation">
         </a>
       </td>
     </tr>
