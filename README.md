@@ -64,7 +64,8 @@ This package provides functions to train, predict, and evaluate a Differentiable
 - Take chromatin conformation data and define L and R cohesin rate parameters
 
 ## Installation
-- Requirements: Python 3.11–3.13
+Requires Python 3.11–3.13
+
 `pip install git+https://github.com/chikinalab/dLEM.git`
 
 Refer to the [Installation](https://chikinalab.github.io/dLEM/installation) section in the documentation for more information and how to contribute.
