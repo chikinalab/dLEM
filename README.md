@@ -58,10 +58,7 @@ SPDX-License-Identifier: MIT
 ---
 
 # Differentiable Loop Extrusion Model
-This package provides functions to train, predict, and evaluate a Differentiable Loop Extrusion Model (DLEM) on HiC/Micro-C experiments.
-
-### Supported operations
-- Take chromatin conformation data and define L and R cohesin rate parameters
+This package provides functions to train, predict, and evaluate a Differentiable Loop Extrusion Model (DLEM) on HiC/Micro-C experiments. Take chromatin conformation data in (m)cool format and calculate L and R cohesin rate parameters.
 
 ## Installation
 Requires Python 3.11–3.13
