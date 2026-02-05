@@ -21,3 +21,14 @@
 
 ## Container
 `docker run ghcr.io/dborgesr/dlem:latest`
+
+## Contributing
+`git clone https://github.com/chikinalab/dLEM.git`
+
+### Using local pixi
+`pixi install -e`
+
+### Using Docker
+`docker-compose build`
+
+`docker-compose up --watch`
