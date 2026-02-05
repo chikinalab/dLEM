@@ -40,7 +40,7 @@ services:
           ignore:
             - .venv/
         - action: rebuild
-          path: ./uv.lock
+          path: ./pixi.lock
 #Service to run test for dLEM
   dlem-test:
     image: dlem-dev

@@ -20,12 +20,8 @@ SPDX-License-Identifier: MIT
     <tr>
       <td>Downloads</td>
       <td>
-        <a href="https://anaconda.org/bioconda/">
-          <img src="https://img.shields.io/conda/vn/bioconda/hictk?label=bioconda&logo=Anaconda" alt="Bioconda">
-        </a>
-        &nbsp
-        <a href="https://hub.docker.com/r/paulsengroup/hictk">
-          <img src="https://img.shields.io/docker/pulls/paulsengroup/hictk" alt="DockerHub">
+        <a href="https://github.com/users/dborgesr/packages/container/package/dlem">
+          <img src="https://img.shields.io/github/deployments/:dborgesr" alt="GithubPackage">
         </a>
         &nbsp
       </td>
@@ -33,15 +29,15 @@ SPDX-License-Identifier: MIT
     <tr>
       <td>Documentation</td>
       <td>
-        <a href="https://dlem.readthedocs.io/">
-          <img src="https://readthedocs.org/projects/dlem/badge/?version=latest" alt="Documentation">
+        <a href="https://chikinalab.github.io/dLEM">
+          <img src="https://img.shields.io/readthedocs/:dLEM/:latest" alt="Documentation">
         </a>
       </td>
     </tr>
     <tr>
       <td>License</td>
       <td>
-        <a href="https://github.com/paulsengroup/hictk/blob/main/LICENSE">
+        <a href="https://github.com/chikinalab/dLEM/blob/main/LICENSE">
           <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
         </a>
       </td>
@@ -49,20 +45,9 @@ SPDX-License-Identifier: MIT
     <tr>
       <td>CI</td>
       <td>
-        <a href="https://github.com/paulsengroup/hictk/actions/workflows/ubuntu-ci.yml">
-          <img src="https://github.com/paulsengroup/hictk/actions/workflows/ubuntu-ci.yml/badge.svg" alt="Ubuntu CI Status">
-        </a>
         &nbsp
-        <a href="https://github.com/paulsengroup/hictk/actions/workflows/macos-ci.yml">
-          <img src="https://github.com/paulsengroup/hictk/actions/workflows/macos-ci.yml/badge.svg" alt="macOS CI Status">
-        </a>
-        &nbsp
-        <a href="https://github.com/paulsengroup/hictk/actions/workflows/windows-ci.yml">
-          <img src="https://github.com/paulsengroup/hictk/actions/workflows/windows-ci.yml/badge.svg" alt="Windows CI Status">
-        </a>
-        &nbsp
-        <a href="https://github.com/paulsengroup/hictk/actions/workflows/build-dockerfile.yml">
-          <img src="https://github.com/paulsengroup/hictk/actions/workflows/build-dockerfile.yml/badge.svg" alt="Build Dockerfile Status">
+        <a href="https://github.com/chikinalab/dLEM/blob/main/.github/workflows/publish.yml">
+          <img src="https://github.com/chikinalab/dLEM/actions/workflows/publish.yml/badge.svg" alt="Build Dockerfile Status">
         </a>
       </td>
     </tr>
@@ -74,34 +59,12 @@ SPDX-License-Identifier: MIT
 
 # Differentiable Loop Extrusion Model
 This package provides functions to train, predict, and evaluate a Differentiable Loop Extrusion Model (DLEM) on HiC/Micro-C experiments.
-## Features
-
-### Supported formats
-
-The CLI application and python library is capable of reading and writing files in the following formats:
-
-<!-- markdownlint-disable MD033 -->
-
-| Format | Revision   | Read | Write           |
-| ------ | ---------- | ---- | --------------- |
-| .cool  | v1-3 (all) | ✅   | ✅ <sup>1</sup> |
-| .mcool | v1-2 (all) | ✅   | ✅ <sup>2</sup> |
-
-<small><small>
-
-<sup>1</sup> v3 only\
-<sup>2</sup> v2 only\
-
-</small></small>
-
-<!-- markdownlint-enable MD033 -->
 
 ### Supported operations
-
 - Take chromatin conformation data and define L and R cohesin rate parameters
 
 ## Installation (GitHub, most current)
-- Requirements: Python 3.11–3.13, recent pip/setuptools/wheel.
+- Requirements: Python 3.11–3.13
 - Create and activate an env (pick one):
   - Conda: `conda create -n dlem-env python=3.12 -y && conda activate dlem-env`
   - Mamba/Micromamba: `mamba create -n dlem-env python=3.12 -y && mamba activate dlem-env`
@@ -114,11 +77,11 @@ The CLI application and python library is capable of reading and writing files i
 - Option B: direct from GitHub (no local clone)
   - `python -m pip install "git+https://github.com/chikinalab/dLEM.git"`
 
-Refer to the [Installation](https://dlem.readthedocs.io/en/stable/installation.html) section in the documentation for more information.
+Refer to the [Installation](https://chikinalab.github.io/dLEM/installation) section in the documentation for more information and how to contribute.
 
 ## Quickstart
 
-# `dLEM`
+**`dLEM`**
 
 dLEM: differentiable Loop Extrusion Model
 
@@ -130,7 +93,7 @@ $ dlem [OPTIONS] DNA_INTS OUTPUT_LOCATION
 
 **Arguments**:
 
-* `DNA_INTS`: Chromatin input dataset in the form of a .cool file  [required]
+* `DNA_INTS`: Chromatin input dataset in the form of a .(m)cool file  [required]
 * `OUTPUT_LOCATION`: Location of output directory, will be created if not existing  [required]
 
 **Options**:
@@ -162,16 +125,19 @@ $ dlem [OPTIONS] DNA_INTS OUTPUT_LOCATION
 * `--show-completion`: Show completion for the current shell, to copy it or customize the installation.
 * `--help`: Show this message and exit.
 
+Refer to the [Quickstart (CLI)](https://chikinalab.github.io/dLEM/cli_usage) and [CLI Reference](https://chikinalab.github.io/dLEM/cli_reference) sections in the documentation for more details.
 
-## Development
+### Docker usage
+`docker run ghcr.io/dborgesr/dlem:latest`
 
+## Contributing
+### Using local pixi
+`pixi install`
+
+### Using Docker
 `docker-compose build`
-`docker-compose up --watch`
 
-Refer to the
-[Quickstart (CLI)](cli_usage.md) and
-[CLI Reference](cli_reference.md)
-sections in the documentation for more details.
+`docker-compose up --watch`
 
 ## Citing
 

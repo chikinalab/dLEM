@@ -44,13 +44,15 @@ include = ["dlem*"]
 
 [dependency-groups]
 dev = [
-    "ipykernel>=7.1.0",
+    "ipykernel",
     "mkdocs>=1.6.1",
-    "mkdocs-jupyter>=0.24.1",
+    "mkdocs-jupyter==0.25.0",
     "mkdocstrings[python]>=1.0.0",
     "pytest>=8.4.2",
     "requests>=2.32.5",
-    "sh>=2.2.2", "python-build>=0.2.13,<0.3", "ruff>=0.14.13,<0.15",
+    "sh>=2.2.2", 
+    "python-build>=0.2.13,<0.3", 
+    "ruff>=0.14.13,<0.15",
 ]
 
 [tool.pytest.ini_options]
