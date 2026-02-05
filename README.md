@@ -100,10 +100,8 @@ The CLI application and python library is capable of reading and writing files i
 
 - Take chromatin conformation data and define L and R cohesin rate parameters
 
-All the above operations can be performed on both Cooler and .hic files and yield identical results.
-
 ## Installation (GitHub, most current)
-- Requirements: Python 3.10–3.12, recent pip/setuptools/wheel.
+- Requirements: Python 3.11–3.13, recent pip/setuptools/wheel.
 - Create and activate an env (pick one):
   - Conda: `conda create -n dlem-env python=3.12 -y && conda activate dlem-env`
   - Mamba/Micromamba: `mamba create -n dlem-env python=3.12 -y && mamba activate dlem-env`
