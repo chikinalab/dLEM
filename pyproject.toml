@@ -3,7 +3,7 @@ name = "dlem"
 version = "0.1.0"
 description = "Tool to build, train, and use the differentiable Loop Extrusion Model (dLEM)"
 readme = "README.md"
-requires-python = ">3.10,<=3.14"
+requires-python = ">=3.11,<=3.14"
 dependencies = [
     "cooler",
     "cython>=3.2.1",
@@ -44,13 +44,15 @@ include = ["dlem*"]
 
 [dependency-groups]
 dev = [
-    "ipykernel>=7.1.0",
+    "ipykernel",
     "mkdocs>=1.6.1",
-    "mkdocs-jupyter>=0.24.1",
+    "mkdocs-jupyter==0.25.0",
     "mkdocstrings[python]>=1.0.0",
     "pytest>=8.4.2",
     "requests>=2.32.5",
-    "sh>=2.2.2", "python-build>=0.2.13,<0.3", "ruff>=0.14.13,<0.15",
+    "sh>=2.2.2", 
+    "python-build>=0.2.13,<0.3", 
+    "ruff>=0.14.13,<0.15",
 ]
 
 [tool.pytest.ini_options]

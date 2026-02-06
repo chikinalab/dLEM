@@ -1,5 +1,5 @@
 # Differentiable Loop Extrusion Model
-This package provides functions to train, predict, and evaluate Differentiable Loop Extrusion Model (DLEM) on HiC/Micro-C experiments formated as mcool files.
+This package provides functions to train, predict, and evaluate Differentiable Loop Extrusion Model (DLEM) on HiC/Micro-C experiments formated as (m)cool files.
 
 ## Installation:
 Requires Python 3.11-3.13
@@ -11,6 +11,7 @@ Install dev environment w/ Pixi:
 
 Contributing using Docker:
 `docker-compose build`
+
 `docker-compose up dlem-dev --watch`
 
 ## Tutorials:
