@@ -319,6 +319,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#using-a-managed-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using a managed environment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#from-pypi" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -348,6 +359,45 @@
       
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contributing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Contributing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-local-pixi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using local pixi
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Docker
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -503,6 +553,53 @@
   
   
   
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    References
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../cli_reference/" class="md-nav__link">
         
@@ -523,9 +620,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -550,9 +648,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -574,6 +673,14 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -603,6 +710,17 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#using-a-managed-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using a managed environment
+      
+    </span>
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#from-pypi" class="md-nav__link">
@@ -637,6 +755,45 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#contributing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contributing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Contributing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-local-pixi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using local pixi
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Docker
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -655,14 +812,34 @@
 
 
 <h1 id="installation">Installation</h1>
+<h2 id="using-a-managed-environment">Using a managed environment</h2>
+<ul>
+<li>Requirements: Python 3.11–3.13, recent pip/setuptools/wheel.</li>
+<li>Create and activate an env (pick one):</li>
+<li>Conda: <code>conda create -n dlem-env python=3.12 -y &amp;&amp; conda activate dlem-env</code></li>
+<li>Mamba/Micromamba: <code>mamba create -n dlem-env python=3.12 -y &amp;&amp; mamba activate dlem-env</code></li>
+<li>python -m venv: <code>python3 -m venv .venv &amp;&amp; source .venv/bin/activate</code></li>
+<li>virtualenv: <code>python3 -m pip install --upgrade virtualenv &amp;&amp; python3 -m virtualenv .venv &amp;&amp; source .venv/bin/activate</code></li>
+<li>Upgrade tooling: <code>python -m pip install --upgrade pip setuptools wheel</code></li>
+<li>Option A: local checkout</li>
+<li>Clone and enter the repo: <code>git clone https://github.com/chikinalab/dLEM.git &amp;&amp; cd dLEM</code></li>
+<li>Install: <code>python -m pip install .</code></li>
+<li>Option B: direct from GitHub (no local clone)</li>
+<li><code>python -m pip install "git+https://github.com/chikinalab/dLEM.git"</code></li>
+</ul>
 <h2 id="from-pypi">From Pypi</h2>
 <p><code>pip install dlem</code></p>
-<p><code>uv pip install dlem</code></p>
 <h2 id="from-source">From source</h2>
-<p><code>git clone https://github.com/chikinalab/dLEM.git</code>
-<code>pixi install</code></p>
+<p><code>pip install git+https://github.com/chikinalab/dLEM.git</code></p>
 <h2 id="container">Container</h2>
 <p><code>docker run ghcr.io/dborgesr/dlem:latest</code></p>
+<h2 id="contributing">Contributing</h2>
+<p><code>git clone https://github.com/chikinalab/dLEM.git</code></p>
+<h3 id="using-local-pixi">Using local pixi</h3>
+<p><code>pixi install -e</code></p>
+<h3 id="using-docker">Using Docker</h3>
+<p><code>docker-compose build</code></p>
+<p><code>docker-compose up --watch</code></p>
 
 
 

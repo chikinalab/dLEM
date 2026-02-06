@@ -421,6 +421,55 @@
       
   
   
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    References
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
   
   
     <li class="md-nav__item">
@@ -443,9 +492,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
     
@@ -1209,9 +1259,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -1233,6 +1284,14 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -2117,14 +2176,7 @@
 
 
 </h2>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">fetch_band</span><span class="p">(</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="cool_filename (api.fetch_band(cool_filename))" href="#api.fetch_band(cool_filename)">cool_filename</a></span><span class="p">:</span> <span class="n"><span title="str">str</span></span><span class="p">,</span>
-    <span class="n"><span title="api.fetch_band(resolution)">resolution</span></span><span class="p">:</span> <span class="n"><span title="int">int</span></span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="cur_region (api.fetch_band(cur_region))" href="#api.fetch_band(cur_region)">cur_region</a></span><span class="p">:</span> <span class="n"><span title="str">str</span></span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="width (api.fetch_band(width))" href="#api.fetch_band(width)">width</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="passthrough (api.fetch_band(passthrough))" href="#api.fetch_band(passthrough)">passthrough</a></span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="fill_nans (api.fetch_band(fill_nans))" href="#api.fetch_band(fill_nans)">fill_nans</a></span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="numpy.ndarray">ndarray</span></span> <span class="o">|</span> <span class="n"><span title="pyarrow.Table">Table</span></span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">fetch_band</span><span class="p">(</span><span class="n"><a class="autorefs autorefs-internal" title="cool_filename (api.fetch_band(cool_filename))" href="#api.fetch_band(cool_filename)">cool_filename</a></span><span class="p">:</span> <span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><span title="api.fetch_band(resolution)">resolution</span></span><span class="p">:</span> <span class="n"><span title="int">int</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="cur_region (api.fetch_band(cur_region))" href="#api.fetch_band(cur_region)">cur_region</a></span><span class="p">:</span> <span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="width (api.fetch_band(width))" href="#api.fetch_band(width)">width</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="passthrough (api.fetch_band(passthrough))" href="#api.fetch_band(passthrough)">passthrough</a></span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="fill_nans (api.fetch_band(fill_nans))" href="#api.fetch_band(fill_nans)">fill_nans</a></span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="numpy.ndarray">ndarray</span></span> <span class="o">|</span> <span class="n"><span title="pyarrow.Table">Table</span></span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
@@ -2517,13 +2569,7 @@
 
 
 </h2>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">band_generate_pixels</span><span class="p">(</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="band (api.band_generate_pixels(band))" href="#api.band_generate_pixels(band)">band</a></span><span class="p">:</span> <span class="n"><span title="numpy.ndarray">ndarray</span></span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="ref_cool_filename (api.band_generate_pixels(ref_cool_filename))" href="#api.band_generate_pixels(ref_cool_filename)">ref_cool_filename</a></span><span class="p">:</span> <span class="n"><span title="str">str</span></span><span class="p">,</span>
-    <span class="n"><span title="api.band_generate_pixels(resolution)">resolution</span></span><span class="p">:</span> <span class="n"><span title="int">int</span></span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="chrom_name (api.band_generate_pixels(chrom_name))" href="#api.band_generate_pixels(chrom_name)">chrom_name</a></span><span class="p">:</span> <span class="n"><span title="str">str</span></span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="offset (api.band_generate_pixels(offset))" href="#api.band_generate_pixels(offset)">offset</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="pandas.DataFrame">DataFrame</span></span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">band_generate_pixels</span><span class="p">(</span><span class="n"><a class="autorefs autorefs-internal" title="band (api.band_generate_pixels(band))" href="#api.band_generate_pixels(band)">band</a></span><span class="p">:</span> <span class="n"><span title="numpy.ndarray">ndarray</span></span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="ref_cool_filename (api.band_generate_pixels(ref_cool_filename))" href="#api.band_generate_pixels(ref_cool_filename)">ref_cool_filename</a></span><span class="p">:</span> <span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><span title="api.band_generate_pixels(resolution)">resolution</span></span><span class="p">:</span> <span class="n"><span title="int">int</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="chrom_name (api.band_generate_pixels(chrom_name))" href="#api.band_generate_pixels(chrom_name)">chrom_name</a></span><span class="p">:</span> <span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="offset (api.band_generate_pixels(offset))" href="#api.band_generate_pixels(offset)">offset</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="pandas.DataFrame">DataFrame</span></span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
@@ -2760,15 +2806,7 @@
 
 
 </h2>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">fit_band_row_profile_sliding</span><span class="p">(</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="band (api.fit_band_row_profile_sliding(band))" href="#api.fit_band_row_profile_sliding(band)">band</a></span><span class="p">,</span>
-    <span class="o">*</span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="start_row (api.fit_band_row_profile_sliding(start_row))" href="#api.fit_band_row_profile_sliding(start_row)">start_row</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="extent (api.fit_band_row_profile_sliding(extent))" href="#api.fit_band_row_profile_sliding(extent)">extent</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="window_size (api.fit_band_row_profile_sliding(window_size))" href="#api.fit_band_row_profile_sliding(window_size)">window_size</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="window_step (api.fit_band_row_profile_sliding(window_step))" href="#api.fit_band_row_profile_sliding(window_step)">window_step</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="log_y (api.fit_band_row_profile_sliding(log_y))" href="#api.fit_band_row_profile_sliding(log_y)">log_y</a></span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="dict">dict</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><span title="float">float</span></span><span class="p">]</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">fit_band_row_profile_sliding</span><span class="p">(</span><span class="n"><a class="autorefs autorefs-internal" title="band (api.fit_band_row_profile_sliding(band))" href="#api.fit_band_row_profile_sliding(band)">band</a></span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="start_row (api.fit_band_row_profile_sliding(start_row))" href="#api.fit_band_row_profile_sliding(start_row)">start_row</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="extent (api.fit_band_row_profile_sliding(extent))" href="#api.fit_band_row_profile_sliding(extent)">extent</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="window_size (api.fit_band_row_profile_sliding(window_size))" href="#api.fit_band_row_profile_sliding(window_size)">window_size</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="window_step (api.fit_band_row_profile_sliding(window_step))" href="#api.fit_band_row_profile_sliding(window_step)">window_step</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="log_y (api.fit_band_row_profile_sliding(log_y))" href="#api.fit_band_row_profile_sliding(log_y)">log_y</a></span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="dict">dict</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><span title="float">float</span></span><span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
@@ -3188,19 +3226,7 @@
 
 
 </h2>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">train_dlem</span><span class="p">(</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="noisy_target (api.train_dlem(noisy_target))" href="#api.train_dlem(noisy_target)">noisy_target</a></span><span class="p">,</span>
-    <span class="o">*</span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="steps (api.train_dlem(steps))" href="#api.train_dlem(steps)">steps</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="start_row (api.train_dlem(start_row))" href="#api.train_dlem(start_row)">start_row</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="slowdown (api.train_dlem(slowdown))" href="#api.train_dlem(slowdown)">slowdown</a></span><span class="p">:</span> <span class="n"><span title="float">float</span></span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="learning_rate (api.train_dlem(learning_rate))" href="#api.train_dlem(learning_rate)">learning_rate</a></span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="train_steps (api.train_dlem(train_steps))" href="#api.train_dlem(train_steps)">train_steps</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span> <span class="o">=</span> <span class="mi">600</span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="verbose (api.train_dlem(verbose))" href="#api.train_dlem(verbose)">verbose</a></span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="loss_type (api.train_dlem(loss_type))" href="#api.train_dlem(loss_type)">loss_type</a></span><span class="p">:</span> <span class="n"><span title="str">str</span></span> <span class="o">=</span> <span class="s2">&quot;multinomial&quot;</span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="weight_power (api.train_dlem(weight_power))" href="#api.train_dlem(weight_power)">weight_power</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="auto_stop_metric (api.train_dlem(auto_stop_metric))" href="#api.train_dlem(auto_stop_metric)">auto_stop_metric</a></span><span class="p">:</span> <span class="n"><span title="str">str</span></span> <span class="o">=</span> <span class="s2">&quot;mse&quot;</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="dict">dict</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><span title="float">float</span></span><span class="p">]</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">train_dlem</span><span class="p">(</span><span class="n"><a class="autorefs autorefs-internal" title="noisy_target (api.train_dlem(noisy_target))" href="#api.train_dlem(noisy_target)">noisy_target</a></span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="steps (api.train_dlem(steps))" href="#api.train_dlem(steps)">steps</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="start_row (api.train_dlem(start_row))" href="#api.train_dlem(start_row)">start_row</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="slowdown (api.train_dlem(slowdown))" href="#api.train_dlem(slowdown)">slowdown</a></span><span class="p">:</span> <span class="n"><span title="float">float</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="learning_rate (api.train_dlem(learning_rate))" href="#api.train_dlem(learning_rate)">learning_rate</a></span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="train_steps (api.train_dlem(train_steps))" href="#api.train_dlem(train_steps)">train_steps</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span> <span class="o">=</span> <span class="mi">600</span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="verbose (api.train_dlem(verbose))" href="#api.train_dlem(verbose)">verbose</a></span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="loss_type (api.train_dlem(loss_type))" href="#api.train_dlem(loss_type)">loss_type</a></span><span class="p">:</span> <span class="n"><span title="str">str</span></span> <span class="o">=</span> <span class="s1">&#39;multinomial&#39;</span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="weight_power (api.train_dlem(weight_power))" href="#api.train_dlem(weight_power)">weight_power</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="auto_stop_metric (api.train_dlem(auto_stop_metric))" href="#api.train_dlem(auto_stop_metric)">auto_stop_metric</a></span><span class="p">:</span> <span class="n"><span title="str">str</span></span> <span class="o">=</span> <span class="s1">&#39;mse&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="dict">dict</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><span title="float">float</span></span><span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
@@ -4051,16 +4077,7 @@
 
 
 </h2>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">generate_dlem_prediction</span><span class="p">(</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="fit_result (api.generate_dlem_prediction(fit_result))" href="#api.generate_dlem_prediction(fit_result)">fit_result</a></span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span>
-    <span class="o">*</span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="start (api.generate_dlem_prediction(start))" href="#api.generate_dlem_prediction(start)">start</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="span (api.generate_dlem_prediction(span))" href="#api.generate_dlem_prediction(span)">span</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="slowdown (api.generate_dlem_prediction(slowdown))" href="#api.generate_dlem_prediction(slowdown)">slowdown</a></span><span class="p">:</span> <span class="n"><span title="float">float</span></span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="rows (api.generate_dlem_prediction(rows))" href="#api.generate_dlem_prediction(rows)">rows</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="mode (api.generate_dlem_prediction(mode))" href="#api.generate_dlem_prediction(mode)">mode</a></span><span class="p">:</span> <span class="n"><span title="str">str</span></span> <span class="o">=</span> <span class="s2">&quot;mse&quot;</span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="offset (api.generate_dlem_prediction(offset))" href="#api.generate_dlem_prediction(offset)">offset</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="tuple">tuple</span></span><span class="p">[</span><span class="n"><span title="numpy.ndarray">ndarray</span></span><span class="p">,</span> <span class="n"><span title="jax.numpy.ndarray">ndarray</span></span><span class="p">,</span> <span class="n"><span title="jax.numpy.ndarray">ndarray</span></span><span class="p">]</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">generate_dlem_prediction</span><span class="p">(</span><span class="n"><a class="autorefs autorefs-internal" title="fit_result (api.generate_dlem_prediction(fit_result))" href="#api.generate_dlem_prediction(fit_result)">fit_result</a></span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="start (api.generate_dlem_prediction(start))" href="#api.generate_dlem_prediction(start)">start</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="span (api.generate_dlem_prediction(span))" href="#api.generate_dlem_prediction(span)">span</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="slowdown (api.generate_dlem_prediction(slowdown))" href="#api.generate_dlem_prediction(slowdown)">slowdown</a></span><span class="p">:</span> <span class="n"><span title="float">float</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="rows (api.generate_dlem_prediction(rows))" href="#api.generate_dlem_prediction(rows)">rows</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="mode (api.generate_dlem_prediction(mode))" href="#api.generate_dlem_prediction(mode)">mode</a></span><span class="p">:</span> <span class="n"><span title="str">str</span></span> <span class="o">=</span> <span class="s1">&#39;mse&#39;</span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="offset (api.generate_dlem_prediction(offset))" href="#api.generate_dlem_prediction(offset)">offset</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="tuple">tuple</span></span><span class="p">[</span><span class="n"><span title="numpy.ndarray">ndarray</span></span><span class="p">,</span> <span class="n"><span title="jax.numpy.ndarray">ndarray</span></span><span class="p">,</span> <span class="n"><span title="jax.numpy.ndarray">ndarray</span></span><span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
@@ -4339,14 +4356,7 @@
 
 
 </h2>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">compute_contact_heatmap</span><span class="p">(</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="vals (api.compute_contact_heatmap(vals))" href="#api.compute_contact_heatmap(vals)">vals</a></span><span class="p">,</span>
-    <span class="o">*</span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="normalize (api.compute_contact_heatmap(normalize))" href="#api.compute_contact_heatmap(normalize)">normalize</a></span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="log (api.compute_contact_heatmap(log))" href="#api.compute_contact_heatmap(log)">log</a></span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="lower_vals (api.compute_contact_heatmap(lower_vals))" href="#api.compute_contact_heatmap(lower_vals)">lower_vals</a></span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="match_lower_range (api.compute_contact_heatmap(match_lower_range))" href="#api.compute_contact_heatmap(match_lower_range)">match_lower_range</a></span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="numpy.ndarray">ndarray</span></span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">compute_contact_heatmap</span><span class="p">(</span><span class="n"><a class="autorefs autorefs-internal" title="vals (api.compute_contact_heatmap(vals))" href="#api.compute_contact_heatmap(vals)">vals</a></span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="normalize (api.compute_contact_heatmap(normalize))" href="#api.compute_contact_heatmap(normalize)">normalize</a></span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="log (api.compute_contact_heatmap(log))" href="#api.compute_contact_heatmap(log)">log</a></span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="lower_vals (api.compute_contact_heatmap(lower_vals))" href="#api.compute_contact_heatmap(lower_vals)">lower_vals</a></span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="match_lower_range (api.compute_contact_heatmap(match_lower_range))" href="#api.compute_contact_heatmap(match_lower_range)">match_lower_range</a></span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="numpy.ndarray">ndarray</span></span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
@@ -4778,9 +4788,7 @@
 
 
 </h2>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">plot_map</span><span class="p">(</span>
-    <span class="n"><a class="autorefs autorefs-internal" title="contact_map (api.plot_map(contact_map))" href="#api.plot_map(contact_map)">contact_map</a></span><span class="p">:</span> <span class="n"><span title="numpy.array">array</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="p_left (api.plot_map(p_left))" href="#api.plot_map(p_left)">p_left</a></span><span class="p">:</span> <span class="n"><span title="numpy.array">array</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="p_right (api.plot_map(p_right))" href="#api.plot_map(p_right)">p_right</a></span><span class="p">:</span> <span class="n"><span title="numpy.array">array</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="region (api.plot_map(region))" href="#api.plot_map(region)">region</a></span><span class="p">:</span> <span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="resolution (api.plot_map(resolution))" href="#api.plot_map(resolution)">resolution</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="plotly.graph_objects.Figure">Figure</span></span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">plot_map</span><span class="p">(</span><span class="n"><a class="autorefs autorefs-internal" title="contact_map (api.plot_map(contact_map))" href="#api.plot_map(contact_map)">contact_map</a></span><span class="p">:</span> <span class="n"><span title="numpy.array">array</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="p_left (api.plot_map(p_left))" href="#api.plot_map(p_left)">p_left</a></span><span class="p">:</span> <span class="n"><span title="numpy.array">array</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="p_right (api.plot_map(p_right))" href="#api.plot_map(p_right)">p_right</a></span><span class="p">:</span> <span class="n"><span title="numpy.array">array</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="region (api.plot_map(region))" href="#api.plot_map(region)">region</a></span><span class="p">:</span> <span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="resolution (api.plot_map(resolution))" href="#api.plot_map(resolution)">resolution</a></span><span class="p">:</span> <span class="n"><span title="int">int</span></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="plotly.graph_objects.Figure">Figure</span></span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
