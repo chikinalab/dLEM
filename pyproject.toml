@@ -3,7 +3,7 @@ name = "dlem"
 version = "0.1.0"
 description = "Tool to build, train, and use the differentiable Loop Extrusion Model (dLEM)"
 readme = "README.md"
-requires-python = ">3.10,<=3.14"
+requires-python = ">=3.11,<=3.14"
 dependencies = [
     "cooler",
     "cython>=3.2.1",
