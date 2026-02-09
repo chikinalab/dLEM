@@ -3,27 +3,25 @@ This package provides functions to train, predict, and evaluate Differentiable L
 
 ## Installation:
 Requires Python 3.11-3.13
-`pip install dlem`
-
-## Contributing
-Install dev environment w/ Pixi:
-`pixi install --environment dev` 
-
-Contributing using Docker:
-`docker-compose build`
-
-`docker-compose up dlem-dev --watch`
+`pip install dlem-jax`
 
 ## Tutorials:
 * [CLI Usage](cli_usage.ipynb)
 * [Synthetic Data](synthetic_data.ipynb)
-* [Example train and use model from python](train_analyze_example.ipynb)
+* [Train and use model w/ Python API](train_analyze_example.ipynb)
 
-## CLI reference:
-[CLI Reference](cli_reference.md)
+## References:
+* [CLI Reference](cli_reference.md)
+* [API Reference](api_reference.md)
+* [Core Reference](core_reference.md)
 
-## Python API reference:
-[API Reference](api_reference.md)
+## Contributing
+Install dev environment w/ Pixi:
 
-## Core Python functions reference:
-[Core Reference](core_reference.md)
+`pixi install --environment dev` 
+
+Contributing using Docker:
+
+`docker-compose build`
+
+`docker-compose up dlem-dev --watch`
