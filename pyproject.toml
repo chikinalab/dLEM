@@ -1,5 +1,5 @@
 [project]
-name = "dlem"
+name = "dlem-jax"
 version = "0.1.0"
 description = "Tool to build, train, and use the differentiable Loop Extrusion Model (dLEM)"
 readme = "README.md"

@@ -14,7 +14,7 @@
   - `python -m pip install "git+https://github.com/chikinalab/dLEM.git"`
 
 ## From Pypi
-`pip install dlem`
+`pip install dlem-jax`
 
 ## From source
 `pip install git+https://github.com/chikinalab/dLEM.git`
