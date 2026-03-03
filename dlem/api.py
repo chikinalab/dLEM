@@ -10,7 +10,7 @@ import pandas
 from scipy.optimize import curve_fit   
 from rich import print
 import re
-import pyranges as pr 
+import pyranges1 as pr 
 import pyarrow
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
@@ -277,9 +277,11 @@ def plot_map(contact_map: np.array,
     """
     split_region = re.split(r"[-:]", region)
     in_region_gr = pr.PyRanges(
-        chromosomes=[split_region[0]],
-        starts=[int(split_region[1])],
-        ends=[int(split_region[2])]
+        {
+        "Chromosome": [split_region[0]],
+        "Start": [int(split_region[1])],
+        "End": [int(split_region[2])]
+        }
     )
     labels_gr = in_region_gr.tile(resolution)
     cur_regions_labels = labels_gr.as_df().agg('{0[Chromosome]}:{0[Start]}-{0[End]}'.format, axis=1)

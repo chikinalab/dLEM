@@ -6,7 +6,7 @@ import typer
 from typing import Optional, List
 from rich import print
 import re
-import pyranges as pr 
+import pyranges1 as pr 
 import pandas as pd
 from enum import Enum
 import hictkpy as htk
@@ -266,22 +266,28 @@ def main(
         split_region = re.split(r"[-:]", region)
         chroms_to_use = [chrom for chrom in chrom_sizes.keys() if chrom == split_region[0]]
         target_regions_gr = pr.PyRanges(
-            chromosomes=[split_region[0]],
-            starts=[int(split_region[1])],
-            ends=[int(split_region[2])]
+            {
+            "Chromosome": [split_region[0]],
+            "Start": [int(split_region[1])],
+            "End": [int(split_region[2])]
+            }
         )
         in_region_gr = pr.PyRanges(
-            chromosomes=chroms_to_use,
-            starts=[0] * len(chroms_to_use),
-            ends=[chrom_sizes[chrom] for chrom in chroms_to_use]
+            {
+            "Chromosome": chroms_to_use,
+            "Start": [0] * len(chroms_to_use),
+            "End": [chrom_sizes[chrom] for chrom in chroms_to_use]
+            }
         )
     elif bed_region_file:
         target_regions_gr = pr.read_bed(bed_region_file)
         chroms_to_use = target_regions_gr.chromosomes
         in_region_gr = pr.PyRanges(
-            chromosomes=chroms_to_use,
-            starts=[0] * len(chroms_to_use),
-            ends=[chrom_sizes[chrom] for chrom in chroms_to_use]
+            {
+            "Chromosome": chroms_to_use,
+            "Start": [0] * len(chroms_to_use),
+            "End": [chrom_sizes[chrom] for chrom in chroms_to_use]
+            }
         )
     if chromosomes:
         chroms_to_use = [chrom for chrom in chromosomes if chrom in chrom_sizes]
@@ -289,22 +295,26 @@ def main(
             print("None of the specified chromosomes were found in the cool file.")
             raise typer.Exit(code=1)
         in_region_gr = pr.PyRanges(
-            chromosomes=chroms_to_use,
-            starts=[0] * len(chroms_to_use),
-            ends=[chrom_sizes[chrom] for chrom in chroms_to_use]
+            {
+            "Chromosome": chroms_to_use,
+            "Start": [0] * len(chroms_to_use),
+            "End": [chrom_sizes[chrom] for chrom in chroms_to_use]
+            }
         )
     elif all:
         chroms_to_use = [key for key, value in chrom_sizes.items() if value > 1000000]
         in_region_gr = pr.PyRanges(
-            chromosomes=chroms_to_use,
-            starts=[0] * len(chroms_to_use),
-            ends=[chrom_sizes[chrom] for chrom in chroms_to_use]
+            {
+            "Chromosome": chroms_to_use,
+            "Start": [0] * len(chroms_to_use),
+            "End": [chrom_sizes[chrom] for chrom in chroms_to_use]
+            }
         )
     if in_region_gr is None:
         print("Please specify chromosomes to train dLEM on using --region, --bed, --chromosomes, or --all")
         raise typer.Exit(code=1)
     if target_regions_gr is not None:
-        target_regions_gr = pr.genomicfeatures.genome_bounds(target_regions_gr, chrom_sizes, clip=True)
+        target_regions_gr = target_regions_gr.clip_ranges(chrom_sizes)
     print(f"Running dLEM on chromosomes: {', '.join(in_region_gr.chromosomes)}")      
 
     output_location = os.path.abspath(output_location)
@@ -319,8 +329,8 @@ def main(
     print("Gathering input data")
     band_width = train_rows + steps + 1
     for cur_chr in in_region_gr.chromosomes:
-        cur_region = in_region_gr[cur_chr].as_df().iloc[0]
-        region_name = f"{cur_region.Chromosome}:{cur_region.Start}-{cur_region.End}"
+        cur_region = in_region_gr.loci[cur_chr]
+        region_name = f"{cur_region["Chromosome"][0]}:{cur_region["Start"][0]}-{cur_region["End"][0]}"
         cur_data = fetch_band(cool_filename,
                               resolution=resolution,
                               cur_region=region_name,
@@ -411,96 +421,78 @@ def main(
     print("Plotting and generating tracks for dLEM selected target regions")
 
     for out_chrom in in_region_gr.chromosomes:
-            chr_start = 0
-            chr_end = chrom_sizes[out_chrom]
-            region_name = f"{out_chrom}:{chr_start}-{chr_end}"
-            ix_chr = in_region_gr.chromosomes.index(out_chrom)
-            cur_model_res = batched_result[ix_chr]
-            cur_goal = out_data[ix_chr]
-            rows, span = cur_goal.shape
-            cur_pred = pred_chroms[out_chrom]
-            cur_l = pred_ls[out_chrom]
-            cur_r = pred_rs[out_chrom]
-
-            if tracks:
-                chr_gr = pr.PyRanges(
-                    chromosomes=[out_chrom],
-                    starts=[chr_start],
-                    ends=[chr_end]
+        chr_start = 0
+        chr_end = chrom_sizes[out_chrom]
+        region_name = f"{out_chrom}:{chr_start}-{chr_end}"
+        ix_chr = in_region_gr.chromosomes.index(out_chrom)
+        cur_model_res = batched_result[ix_chr]
+        cur_goal = out_data[ix_chr]
+        rows, span = cur_goal.shape
+        cur_pred = pred_chroms[out_chrom]
+        cur_l = pred_ls[out_chrom]
+        cur_r = pred_rs[out_chrom]
+        
+        if not target_regions_gr.empty:
+            plot_regions_df = target_regions_gr.loci[out_chrom]
+            for plot_ix in range(len(plot_regions_df)):
+                plot_region = plot_regions_df.iloc[plot_ix]
+                plot_gr = pr.PyRanges(
+                    {
+                    "Chromosome": [plot_region.Chromosome],
+                    "Start": [plot_region.Start],
+                    "End": [plot_region.End]
+                    }
                 )
+                plot_start_offset = int(np.floor(plot_region.Start / resolution))
+                plot_end_offset = int(np.ceil(plot_region.End / resolution))
+                plot_region_name = f"{plot_region.Chromosome}_{plot_region.Start}_{plot_region.End}"
+                plot_region_chr_name = f"{plot_region.Chromosome}:{plot_region.Start}-{plot_region.End}"
+                cur_l_plot = cur_l[plot_start_offset:plot_end_offset]
+                cur_r_plot = cur_r[plot_start_offset:plot_end_offset]
+                if tracks:
+                    out_left_csv = os.path.join(output_location,f'{plot_region_name}_pred_left.bed')
+                    plot_l_gr = plot_gr.tile_ranges(resolution)
+                    plot_l_gr.loc[:, 'Score'] = cur_l_plot
+                    plot_l_gr.to_csv(out_left_csv, sep="\t", header=False)
 
-                bw_res = 100
-                cur_l_gr = chr_gr.tile(resolution)
-                cur_l_gr.Score = cur_l
-                cur_l_gr = cur_l_gr.tile(bw_res)
-                cur_l_gr.End = cur_l_gr.End-1
-                out_gr_l.append(cur_l_gr)
+                    out_right_csv = os.path.join(output_location,f'{plot_region_name}_pred_right.bed')
+                    plot_r_gr = plot_gr.tile_ranges(resolution)
+                    plot_r_gr.loc[:, 'Score'] = cur_r_plot
+                    plot_r_gr.to_csv(out_right_csv, sep="\t", header=False)
 
-                cur_r_gr = chr_gr.tile(resolution)
-                cur_r_gr.Score = cur_r
-                cur_r_gr = cur_r_gr.tile(bw_res)
-                cur_r_gr.End = cur_r_gr.End-1
-                out_gr_r.append(cur_r_gr)
-            
-            if target_regions_gr:
-                plot_regions_df = target_regions_gr[out_chrom].as_df()
-                for plot_ix in range(len(plot_regions_df)):
-                    plot_region = plot_regions_df.iloc[plot_ix]
-                    plot_gr = pr.PyRanges(
-                        chromosomes=[plot_region.Chromosome],
-                        starts=[plot_region.Start],
-                        ends=[plot_region.End]
+                if plot:
+                    print(f"Plotting predictions as HTML and PNG for {plot_region_name}")
+                    band_height = min(plot_end_offset - plot_start_offset, 
+                                        cur_pred.shape[0],
+                                        cur_goal.shape[0])
+                    cur_pred_plot = cur_pred[0:band_height,
+                                                plot_start_offset:plot_end_offset]
+                    cur_goal_plot = cur_goal[0:band_height,
+                                                plot_start_offset:plot_end_offset]
+                    heatmap = compute_contact_heatmap(
+                        cur_pred_plot,
+                        lower_vals=cur_goal_plot,
+                        normalize=True,
+                        log=True,
+                        match_lower_range=True
                     )
-                    plot_start_offset = int(np.floor(plot_region.Start / resolution))
-                    plot_end_offset = int(np.ceil(plot_region.End / resolution))
-                    plot_region_name = f"{plot_region.Chromosome}_{plot_region.Start}_{plot_region.End}"
-                    plot_region_chr_name = f"{plot_region.Chromosome}:{plot_region.Start}-{plot_region.End}"
-                    cur_l_plot = cur_l[plot_start_offset:plot_end_offset]
-                    cur_r_plot = cur_r[plot_start_offset:plot_end_offset]
-                    if tracks:
-                        out_left_csv = os.path.join(output_location,f'{plot_region_name}_pred_left.bed')
-                        plot_l_gr = plot_gr.tile(resolution)
-                        plot_l_gr.Score = cur_l_plot
-                        plot_l_gr.to_csv(out_left_csv, sep="\t", header=False)
-
-                        out_right_csv = os.path.join(output_location,f'{plot_region_name}_pred_right.bed')
-                        plot_r_gr = plot_gr.tile(resolution)
-                        plot_r_gr.Score = cur_r_plot
-                        plot_r_gr.to_csv(out_right_csv, sep="\t", header=False)
-
-                    if plot:
-                        print(f"Plotting predictions as HTML and PNG for {plot_region_name}")
-                        band_height = min(plot_end_offset - plot_start_offset, 
-                                          cur_pred.shape[0],
-                                          cur_goal.shape[0])
-                        cur_pred_plot = cur_pred[0:band_height,
-                                                 plot_start_offset:plot_end_offset]
-                        cur_goal_plot = cur_goal[0:band_height,
-                                                 plot_start_offset:plot_end_offset]
-                        heatmap = compute_contact_heatmap(
-                            cur_pred_plot,
-                            lower_vals=cur_goal_plot,
-                            normalize=True,
-                            log=True,
-                            match_lower_range=True
-                        )
-                        
-                        out_name = os.path.join(output_location,
-                                                f'in_vs_pred_{plot_region_name}.png')
-                        out_html = os.path.join(output_location,
-                                                f'in_vs_pred_{plot_region_name}.html')
-                        fig = plot_map(heatmap,
-                                        cur_l_plot, 
-                                        cur_r_plot, 
-                                        plot_region_chr_name, 
-                                        resolution)
-                        fig.write_html(out_html)
-                        fig.update_layout(
-                            width=1400,
-                            height=700,
-                        )
-                        out_names.append(out_name)
-                        out_figs.append(fig)
+                    
+                    out_name = os.path.join(output_location,
+                                            f'in_vs_pred_{plot_region_name}.png')
+                    out_html = os.path.join(output_location,
+                                            f'in_vs_pred_{plot_region_name}.html')
+                    fig = plot_map(heatmap,
+                                    cur_l_plot, 
+                                    cur_r_plot, 
+                                    plot_region_chr_name, 
+                                    resolution)
+                    fig.write_html(out_html)
+                    fig.update_layout(
+                        width=1400,
+                        height=700,
+                    )
+                    out_names.append(out_name)
+                    out_figs.append(fig)
 
     if output_cool:
         print(f"Outputting dLEM predicted contact map to {pred_cool_filename}")
@@ -523,27 +515,43 @@ def main(
                              triucheck=False,
                              dupcheck=False)
         
-        # with htk.cooler.FileWriter(pred_cool_filename,
-        #                            bins=bins
+        # with htk.cooler.FileWriter(path=pred_cool_filename,
+        #                            bins=bins,
         #                            ) as pred_cool_filehandle:
         #     for out_chrom in chrom_sizes.keys():
         #         pred_cool_filehandle.add_pixels(sorted = False,
         #                                         pixels = band_generate_pixels(
         #                                             band=pred_chroms[out_chrom],
         #                                             ref_cool_filename=cool_filename,
+        #                                             resolution=resolution,
         #                                             chrom_name=out_chrom,
         #                                             ))
                 
     if tracks:
-        all_gr_l = pr.concat(out_gr_l)
-        all_gr_r = pr.concat(out_gr_r)
-        all_gr_l.to_bigwig(out_left_bw, 
-                           chrom_sizes,
-                           rpm=False,
-                           value_col="Score")
-        all_gr_r.to_bigwig(out_right_bw, 
-                           chrom_sizes,
-                           rpm=False,
-                           value_col="Score")
+        bw_res = 100
+        chr_gr = pr.PyRanges(
+            {
+            "Chromosome": in_region_gr["Chromosome"].copy(),
+            "Start": [0] * len(in_region_gr["Chromosome"]),
+            "End": [chrom_sizes[chrom] for chrom in in_region_gr.chromosomes].copy()
+            }
+        )
+
+        cur_l_gr = chr_gr.tile_ranges(resolution)
+        cur_l_gr['Score'] = np.concatenate([pred_ls[chrom] for chrom in in_region_gr.chromosomes], axis=0)
+        cur_l_gr = cur_l_gr.tile_ranges(bw_res)
+        cur_l_gr.to_bigwig(out_left_bw, 
+                            chrom_sizes,
+                            rpm=False,
+                            value_col="Score"
+                        )
+
+        cur_r_gr = chr_gr.tile_ranges(resolution)
+        cur_r_gr['Score'] = np.concatenate([pred_rs[chrom] for chrom in in_region_gr.chromosomes], axis=0)
+        cur_r_gr = cur_r_gr.tile_ranges(bw_res)
+        cur_r_gr.to_bigwig(out_right_bw, 
+                            chrom_sizes,
+                            rpm=False,
+                            value_col="Score")
 
     print(f"dLEM analysis complete! Outputs written to {output_location}")
