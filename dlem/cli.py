@@ -54,7 +54,8 @@ dlem_cli = typer.Typer(
     dLEM learns the speed of Left and Right leg of Cohesin extrusion at each genomic bin or pixel 
     dLEM can be used to predict contact maps from extrusion parameters, 
     harmonize chromatin contact, and generate tracks of chromatin extrusion speed""",
-    context_settings={"help_option_names": ["-h", "--help"]}
+    context_settings={"help_option_names": ["-h", "--help"]},
+    pretty_exceptions_show_locals=True
 )
 
 
@@ -330,7 +331,7 @@ def main(
     band_width = train_rows + steps + 1
     for cur_chr in in_region_gr.chromosomes:
         cur_region = in_region_gr.loci[cur_chr]
-        region_name = f"{cur_region["Chromosome"][0]}:{cur_region["Start"][0]}-{cur_region["End"][0]}"
+        region_name = f"{cur_region["Chromosome"].iloc[0]}:{cur_region["Start"].iloc[0]}-{cur_region["End"].iloc[0]}"
         cur_data = fetch_band(cool_filename,
                               resolution=resolution,
                               cur_region=region_name,
@@ -432,7 +433,7 @@ def main(
         cur_l = pred_ls[out_chrom]
         cur_r = pred_rs[out_chrom]
         
-        if not target_regions_gr.empty:
+        if target_regions_gr is not None:
             plot_regions_df = target_regions_gr.loci[out_chrom]
             for plot_ix in range(len(plot_regions_df)):
                 plot_region = plot_regions_df.iloc[plot_ix]
