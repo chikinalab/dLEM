@@ -6,6 +6,8 @@ tests/__pycache__
 tests/*.mcool
 tests/*.tsv
 data/
+!docs/data/
+!docs/data/**
 # local shell history
 .local_bash_history.txt
 dlem/.local_bash_history.txt

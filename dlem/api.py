@@ -10,7 +10,6 @@ import pandas
 from scipy.optimize import curve_fit   
 from rich import print
 import re
-import pyranges1 as pr 
 import pyarrow
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
@@ -275,6 +274,7 @@ def plot_map(contact_map: np.array,
     Returns:
         plotly.graph_objs.Figure: Plotly figure object.
     """
+    import pyranges1 as pr
     split_region = re.split(r"[-:]", region)
     in_region_gr = pr.PyRanges(
         {
@@ -669,6 +669,10 @@ def train_dlem(
         if auto_stop_metric != "none" and mse_float is not None and corr_float is not None:
             if auto_stop_metric == "mse" and best_mse_step is not None and step > best_mse_step and step < train_steps:
                 if verbose:
+                    # TODO: message says "MSE improvement" even when loss_type='multinomial';
+                    # the stop criterion uses MSE as a secondary metric regardless of loss_type.
+                    # Rephrase to reflect the actual metric being monitored, e.g.
+                    # "no improvement in {auto_stop_metric} after step {best_mse_step}".
                     print(
                         f"[train] early stopping at step {step} (no MSE improvement after step {best_mse_step}).",
                         flush=True,
