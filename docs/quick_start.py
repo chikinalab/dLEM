@@ -33,8 +33,10 @@ RESOLUTION = 10_000
 # Offset for converting local bin positions to true chr10 coordinates (Mb)
 GENOMIC_OFFSET_MB = 19.0
 
+print('Loading and processing Hi-C data...', flush=True)
 band = fetch_band(COOL, RESOLUTION, REGION, width=700)  # (700, 700), float32
 band_train = band[1:170, :]                              # rows 1–169 (exclude row 0)
+print(f'band shape: {band.shape},  dtype: {band.dtype}', flush=True)
 
 # ── 2. Train dLEM (paper settings) ───────────────────────────────────────────
 
