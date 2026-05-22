@@ -62,10 +62,22 @@ This package provides functions to train, predict, and evaluate a Differentiable
 
 ## Installation
 Requires Python 3.11–3.13
-`pip install dlem-jax`
+
+**CPU only (default):**
+```bash
+pip install dlem-jax
+```
+
+**With NVIDIA GPU support (CUDA 12):**
+```bash
+pip install "dlem-jax[cuda]"
+```
 
 ### From source
-`pip install git+https://github.com/chikinalab/dLEM.git`
+```bash
+pip install git+https://github.com/chikinalab/dLEM.git          # CPU
+pip install "git+https://github.com/chikinalab/dLEM.git[cuda]"  # GPU
+```
 
 Refer to the [Installation](https://chikinalab.github.io/dLEM/installation) section in the documentation for more information and how to contribute.
 
