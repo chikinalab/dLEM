@@ -54,6 +54,7 @@ result = train_dlem(
 )
 p_left  = np.array(result['p_left_mse'])
 p_right = np.array(result['p_right_mse'])
+print(f'Training summary — best Pearson r: {result["best_corr"]:.3f}  |  best MSE: {result["best_mse"]:.4f}')
 
 # ── 3. Generate prediction for the reference locus ───────────────────────────
 
@@ -78,6 +79,7 @@ pred_sq  = flip_diag_row(_log_eo(pred_band))
 obs_sq   = flip_diag_row(_log_eo(obs_band))
 # Upper triangle = observation, lower triangle = prediction
 combined = np.triu(obs_sq) + np.tril(pred_sq.T, k=-1)
+
 
 # ── 5. Figure (L track on top, contact map, R track on right) ─────────────────
 
