@@ -6,11 +6,11 @@ import numpy as np
 import os
 import time
 import hictkpy as htk
+import cooler as clr
 import pandas
-from scipy.optimize import curve_fit   
+from scipy.optimize import curve_fit
 from rich import print
 import re
-import pyranges1 as pr 
 import pyarrow
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
@@ -143,12 +143,18 @@ def norm_band(cur_pred: np.ndarray,
     
     return cur_pred
 
+def _cooler_uri(cool_filename: str, resolution: int) -> str:
+    if cool_filename.endswith('.mcool'):
+        return f"{cool_filename}::resolutions/{resolution}"
+    return cool_filename
+
+
 def fetch_band(cool_filename: str,
                resolution: int,
-                cur_region: str,
-                width: int,
-                passthrough: bool = False,
-                fill_nans: bool = True) -> np.ndarray | pyarrow.Table:
+               cur_region: str,
+               width: int,
+               passthrough: bool = False,
+               fill_nans: bool = True) -> np.ndarray | pyarrow.Table:
     """
     Extract a band matrix from a .cool file for a given region and width.
 
@@ -156,7 +162,7 @@ def fetch_band(cool_filename: str,
         cool_filename (str): Path to .cool file.
         cur_region (str): Genomic region string (e.g., 'chr1:0-10000').
         width (int): Band width.
-        passthrough (bool): If True, return raw data as DataFrame.
+        passthrough (bool): If True, return raw pixel data as DataFrame.
         fill_nans (bool): If True, fill NaNs in the band.
 
     Returns:
@@ -165,37 +171,40 @@ def fetch_band(cool_filename: str,
     if width <= 0:
         raise ValueError("width must be positive.")
 
-    with htk.File(cool_filename, resolution) as cool_handle:
+    split_region = re.split(r"[-:]", cur_region)
+    chrom = split_region[0]
+    cool = clr.Cooler(_cooler_uri(cool_filename, resolution))
 
-        split_region = re.split(r"[-:]", cur_region)
-        bins = cool_handle.bins().to_pandas(range=cur_region)
+    if not passthrough:
+        bins = cool.bins().fetch(cur_region)
+        n = len(bins)
         step = width // 2
         block = width + step
-        n = len(bins)
 
-        if not passthrough:
-            band = np.zeros((width, n), dtype=np.float32)
-            for i in range(0, n, step):
-                i0, i1 = i, min(n, i + block)
-                region = f'{split_region[0]}:{bins.start.iloc[i0]}-{bins.end.iloc[i1-1]}'
-                raw = cool_handle.fetch(region).to_numpy()
-                bal = cool_handle.fetch(region, normalization="weight").to_numpy()
-                with np.errstate(divide="ignore", invalid="ignore"):
-                    sub = adaptive_coarsegrain(bal, raw, cutoff=3, max_levels=8)
+        bal_mat = cool.matrix(balance=True)
+        raw_mat = cool.matrix(balance=False)
 
-                for k in range(width):
-                    vals = jnp.diag(sub, k)
-                    start = i0 + k
-                    end = start + len(vals)
-                    if start < n:
-                        band[k, start:end] = vals[: max(0, n - start)]
-            if fill_nans:
-                band = fill_band_nans(band)
-        else:
-            region = f'{split_region[0]}:{split_region[1]}-{split_region[2]}'
-            band = cool_handle.fetch(region).to_pandas()
-            
-        return band
+        band = np.zeros((width, n), dtype=np.float32)
+        for i in range(0, n, step):
+            i0, i1 = i, min(n, i + block)
+            region = f'{chrom}:{bins.start.iloc[i0]}-{bins.end.iloc[i1-1]}'
+            bal = bal_mat.fetch(region)
+            raw = raw_mat.fetch(region)
+            with np.errstate(divide="ignore", invalid="ignore"):
+                sub = adaptive_coarsegrain(bal, raw, cutoff=3, max_levels=8)
+            for k in range(width):
+                vals = np.diagonal(sub, k)
+                col_start = i0 + k
+                col_end = min(col_start + len(vals), n)
+                if col_start < n:
+                    band[k, col_start:col_end] = vals[:col_end - col_start]
+        if fill_nans:
+            band = fill_band_nans(band)
+    else:
+        region = f'{chrom}:{split_region[1]}-{split_region[2]}'
+        band = cool.pixels().fetch(region)
+
+    return band
     
 
 def band_generate_pixels(
@@ -275,6 +284,7 @@ def plot_map(contact_map: np.array,
     Returns:
         plotly.graph_objs.Figure: Plotly figure object.
     """
+    import pyranges1 as pr
     split_region = re.split(r"[-:]", region)
     in_region_gr = pr.PyRanges(
         {
@@ -669,6 +679,10 @@ def train_dlem(
         if auto_stop_metric != "none" and mse_float is not None and corr_float is not None:
             if auto_stop_metric == "mse" and best_mse_step is not None and step > best_mse_step and step < train_steps:
                 if verbose:
+                    # TODO: message says "MSE improvement" even when loss_type='multinomial';
+                    # the stop criterion uses MSE as a secondary metric regardless of loss_type.
+                    # Rephrase to reflect the actual metric being monitored, e.g.
+                    # "no improvement in {auto_stop_metric} after step {best_mse_step}".
                     print(
                         f"[train] early stopping at step {step} (no MSE improvement after step {best_mse_step}).",
                         flush=True,
