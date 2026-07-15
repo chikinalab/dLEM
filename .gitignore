@@ -1,4 +1,5 @@
 site/
+.cache/
 docs/.ipynb_checkpoints
 .ipynb_checkpoints
 __pycache__/
@@ -8,6 +9,10 @@ tests/*.tsv
 data/
 !docs/data/
 !docs/data/**
+docs/data/*.mcool
+docs/data/*.bigWig
+docs/data/*.bed.gz
+band_cache/
 # local shell history
 .local_bash_history.txt
 dlem/.local_bash_history.txt

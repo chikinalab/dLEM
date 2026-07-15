@@ -1,27 +1,62 @@
-# API Documentation
+# Python API Reference
 
-## GPU Utilities
+`import dlem` exposes a single flat namespace; internals live in submodules (`io`,
+`model`, `losses`, `train`, `metrics`, `viz`).
 
-::: api.set_device
+## I/O (`dlem.io`)
 
-## Data Manipulation Utilities
+::: io.load_band
 
-::: api.fetch_band
+::: io.load_patch
 
-::: api.norm_band
+::: io.load_ctcf
 
-::: api.band_generate_pixels
+::: io.normalize_oe
 
-::: api.fit_band_row_profile_sliding
+::: io.extract_band_from_mcool
 
-## dLEM Train/Prediction Utilities
+## Model (`dlem.model`)
 
-::: api.train_dlem
+::: model.full_rollout
 
-::: api.generate_dlem_prediction
+::: model.full_rollout_selfnorm
 
-::: api.compute_contact_heatmap
+::: model.teacher_forced
 
-::: api.flip_diag_row
+## Losses (`dlem.losses`)
 
-::: api.plot_map
+::: losses.make_losses
+
+::: losses.band_metrics
+
+## Fitting (`dlem.train`)
+
+::: train.fit
+
+::: train.DlemFit
+
+::: train.fit_lean
+
+::: train.run_adam
+
+## Metrics (`dlem.metrics`)
+
+::: metrics.ctcf_report
+
+::: metrics.lagged_corr
+
+::: metrics.max_lagged_correlation
+
+::: metrics.track_correlations
+
+::: metrics.load_ctcf_tsv
+
+## Visualization (`dlem.viz`)
+
+::: viz.plot_patch
+
+::: viz.plot_prediction
+
+::: viz.plot_prediction_region
+
+::: viz.band_to_dense

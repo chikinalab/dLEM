@@ -4,13 +4,11 @@ nav:
   - Home: README.md
   - Installation: installation.md
   - Tutorials:
+    - Quick start: quick_start.ipynb
     - CLI usage: cli_usage.ipynb
-    - Train and Analyze: train_analyze_example.ipynb
-    - Synthetic Data: synthetic_data.ipynb
   - References:
-    - CLI Reference: cli_reference.md 
-    - Python API Reference: api_reference.md 
-    - Core Reference: core_reference.md 
+    - CLI Reference: cli_reference.md
+    - Python API Reference: api_reference.md
 
 theme: 
   name: material

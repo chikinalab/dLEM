@@ -6,14 +6,12 @@ Requires Python 3.11-3.13
 `pip install dlem-jax`
 
 ## Tutorials:
+* [Quick start](quick_start.ipynb)
 * [CLI Usage](cli_usage.ipynb)
-* [Synthetic Data](synthetic_data.ipynb)
-* [Train and use model w/ Python API](train_analyze_example.ipynb)
 
 ## References:
 * [CLI Reference](cli_reference.md)
 * [API Reference](api_reference.md)
-* [Core Reference](core_reference.md)
 
 ## Contributing
 Install dev environment w/ Pixi:
