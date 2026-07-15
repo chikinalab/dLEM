@@ -20,3 +20,6 @@ dlem/.local_bash_history.txt
 # pixi environments
 .pixi/*
 !.pixi/config.toml
+# personal/local dev config -- not for a public repo
+.env
+.vscode/

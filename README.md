@@ -135,7 +135,8 @@ $ dlem docs/data/example_chr10.cool /tmp/out \
 
 If you use dLEM or any of its language bindings in your research, please cite the following publication:
 
-Tina Subic, Tŭgrul Balcı, Kristina Perevoshchikova, Geoffrey Fudenberg, Maria Chikina, Mechanistic Genome Folding at Scale through the Differentiable Loop Extrusion Model
+Tina Subic, Tŭgrul Balcı, Kristina Perevoshchikova, Geoffrey Fudenberg, Maria Chikina.
+**Mechanistic Genome Folding at Scale through the Differentiable Loop Extrusion Model.**
 _Biorxiv_, [https://www.biorxiv.org/content/10.1101/2025.10.17.682904v1](https://www.biorxiv.org/content/10.1101/2025.10.17.682904v1)
 
 <details>

@@ -84,6 +84,15 @@ def test_fit_synthetic_smoke(tmp_path):
     assert np.all(np.isfinite(fit.L)) and np.all(np.isfinite(fit.R))
 
 
+def test_fit_lean_teacher_smoke(tmp_path):
+    """forward="teacher" (fit_lean's non-default path) gets no other coverage otherwise."""
+    cool_path = str(tmp_path / "synthetic.cool")
+    synthetic_cool(cool_path)
+    band = dlem.load_band(cool_path, resolution=1000, chrom="chr1", width=20, use_cache=False)
+    L, R = dlem.fit_lean(band, s=0.025, train_to=20, forward="teacher", n_opt=50, verbose=False)
+    assert np.all(np.isfinite(L)) and np.all(np.isfinite(R))
+
+
 # --------------------------------------------------------------------------------------
 # CLI: confirm the console script itself still works end-to-end.
 # --------------------------------------------------------------------------------------
