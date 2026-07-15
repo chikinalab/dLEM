@@ -1,12 +1,11 @@
 """Optimization: Adam with (mse, corr, loss) checkpoints + early stopping, and fit wrappers.
 
-`fit_lean` supports two training forwards:
-  * forward="teacher"  -- shallow teacher-forced refine (default; cheap, any depth).
-  * forward="selfnorm" -- self-normalizing FULL rollout, trained end-to-end;
-                          loss-neutral under the O/E losses but stable to full depth.
+`fit_lean` / `fit` train L, R directly with Adam under the per-diagonal multinomial loss on
+the self-normalizing full rollout, trained end-to-end -- loss-neutral under the O/E losses
+but stable to full depth.
 
 Checkpoint metrics are always computed on the *plain full rollout* (deployment forward), so
-the reported mse/corr reflect deployment behavior regardless of training forward.
+the reported mse/corr reflect deployment behavior.
 """
 from dataclasses import dataclass, field
 
@@ -16,7 +15,7 @@ import jax
 import jax.numpy as jnp
 import optax
 
-from .model import full_rollout, full_rollout_selfnorm, teacher_forced
+from .model import full_rollout, full_rollout_selfnorm
 from .losses import band_metrics, make_losses
 from .io import normalize_oe
 
@@ -170,8 +169,8 @@ def _proj_LR(p):
     return {**p, "L": jnp.clip(p["L"], 1e-4, 1.0), "R": jnp.clip(p["R"], 1e-4, 1.0)}
 
 
-def _optimize(band, *, s, train_to, start_row, steps, importance_power, diag_weight_power,
-              forward, n_opt, lr, every, monitor, mse_tol, patience, verbose):
+def _optimize(band, *, s, train_to, start_row, importance_power, diag_weight_power,
+              n_opt, lr, every, monitor, mse_tol, patience, verbose):
     """Run the Adam optimization; return run_adam's full `best` dict (all checkpoints)."""
     obs = jnp.asarray(band[:train_to], jnp.float32)
     n = obs.shape[1]
@@ -179,13 +178,7 @@ def _optimize(band, *, s, train_to, start_row, steps, importance_power, diag_wei
     params = {"L": jnp.ones(n), "R": jnp.ones(n)}
     LR_of = lambda p: (p["L"], p["R"])
     vel_of = lambda u: ((u["L"] + u["R"]) / 2.0, (u["L"] - u["R"]) / 2.0)
-    if forward == "teacher":
-        fwd = lambda L, R: teacher_forced(obs, L, R, s, steps, start_row)
-    elif forward == "selfnorm":
-        fwd = lambda L, R: full_rollout_selfnorm(L, R, s, train_to)
-    else:
-        raise ValueError(f"unknown forward {forward!r}")
-    loss_fn = lambda p: imp(fwd(*LR_of(p)))
+    loss_fn = lambda p: imp(full_rollout_selfnorm(*LR_of(p), s, train_to))
     metric_forward = lambda p: full_rollout(*LR_of(p), s, train_to)
     return run_adam(params, loss_fn, metric_forward, obs, _proj_LR, n_opt=n_opt, lr=lr,
                     every=every, start_row=start_row, monitor=monitor, patience=patience,
@@ -198,10 +191,8 @@ def fit_lean(
     s,
     train_to,
     start_row=5,
-    steps=10,
     importance_power=0.0,
     diag_weight_power=1.0,
-    forward="selfnorm",
     n_opt=500,
     lr=1e-2,
     every=25,
@@ -210,10 +201,9 @@ def fit_lean(
     patience=None,
     verbose=True,
 ):
-    """Fit dLEM L, R directly with Adam under the per-diagonal multinomial loss.
+    """Fit dLEM L, R directly with Adam under the per-diagonal multinomial loss on the
+    self-normalizing full rollout, trained end-to-end.
 
-    forward: "selfnorm" -- the self-normalizing full rollout, trained end-to-end (the supported
-             method); or "teacher" -- shallow data-seeded refine (`steps` sweeps; kept for reference).
     importance_power  -- WITHIN each diagonal: emphasize high-mass anchor bins (obs distribution ^
                          (1 + importance_power)). 0 = plain multinomial.
     diag_weight_power -- BETWEEN diagonals: weight each diagonal by (diagonal total)^power.
@@ -224,9 +214,9 @@ def fit_lean(
       "mse" / "corr" / "loss" -- best-of-that-metric (most-fit but usually drifted).
     Returns (L, R) at the chosen checkpoint.
     """
-    best = _optimize(band, s=s, train_to=train_to, start_row=start_row, steps=steps,
+    best = _optimize(band, s=s, train_to=train_to, start_row=start_row,
                      importance_power=importance_power, diag_weight_power=diag_weight_power,
-                     forward=forward, n_opt=n_opt, lr=lr, every=every, monitor=monitor,
+                     n_opt=n_opt, lr=lr, every=every, monitor=monitor,
                      mse_tol=mse_tol, patience=patience, verbose=verbose)
     bp = best[monitor][1]
     return jnp.clip(bp["L"], 1e-4, 1.0), jnp.clip(bp["R"], 1e-4, 1.0)
@@ -287,9 +277,9 @@ def fit(band, *, s, train_to, importance_power=0.0, diag_weight_power=1.0, monit
                          "corr" | "loss". ALL checkpoints from this one optimization are also kept in
                          fit.checkpoints (compare them with dlem.ctcf_report(fit, ...)).
     """
-    best = _optimize(band, s=s, train_to=train_to, start_row=start_row, steps=10,
+    best = _optimize(band, s=s, train_to=train_to, start_row=start_row,
                      importance_power=importance_power, diag_weight_power=diag_weight_power,
-                     forward="selfnorm", n_opt=n_opt, lr=lr, every=every, monitor=monitor,
+                     n_opt=n_opt, lr=lr, every=every, monitor=monitor,
                      mse_tol=1.05, patience=None, verbose=verbose)
 
     def _LR(name):

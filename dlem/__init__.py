@@ -11,7 +11,7 @@ fitting, metrics, and visualization behind a single flat import.
 Public API
   I/O     : load_band, load_patch, load_ctcf, load_ctcf_tsv, normalize_oe
   fit     : fit -> DlemFit  (also fit_lean, run_adam)
-  model   : full_rollout, full_rollout_selfnorm, teacher_forced
+  model   : full_rollout, full_rollout_selfnorm
   metrics : lagged_corr, ctcf_report, max_lagged_correlation, track_correlations
   viz     : plot_patch, plot_prediction, plot_prediction_region
 
@@ -19,7 +19,7 @@ See docs/quick_start.ipynb for an end-to-end walkthrough. Internals live in subm
 (io, model, losses, train, metrics, viz).
 """
 from .io import load_band, load_patch, load_ctcf, normalize_oe, extract_band_from_mcool
-from .model import full_rollout, full_rollout_selfnorm, teacher_forced
+from .model import full_rollout, full_rollout_selfnorm
 from .losses import make_losses, band_metrics
 from .train import fit, DlemFit, fit_lean, run_adam
 from .metrics import (lagged_corr, ctcf_report, max_lagged_correlation,
@@ -31,7 +31,7 @@ __all__ = [
     "load_band", "load_patch", "load_ctcf", "load_ctcf_tsv", "normalize_oe",
     "extract_band_from_mcool",
     "fit", "DlemFit", "fit_lean", "run_adam",
-    "full_rollout", "full_rollout_selfnorm", "teacher_forced",
+    "full_rollout", "full_rollout_selfnorm",
     "make_losses", "band_metrics",
     "lagged_corr", "ctcf_report", "max_lagged_correlation", "track_correlations",
     "plot_patch", "plot_prediction", "plot_prediction_region", "band_to_dense",

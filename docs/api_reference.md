@@ -21,8 +21,6 @@
 
 ::: model.full_rollout_selfnorm
 
-::: model.teacher_forced
-
 ## Losses (`dlem.losses`)
 
 ::: losses.make_losses

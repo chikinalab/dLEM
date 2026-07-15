@@ -10,16 +10,14 @@ movement of, the anchor it's named for. (A prior version of this code had L and 
 swapped internally -- L was driving the right-moving anchor and R the left-moving one, the
 opposite of their names -- fixed here; see also CTCF strand convention in metrics.py.)
 
-Three forwards, by use:
-  * `teacher_forced`  -- shallow, data-seeded refine (~10-30 sweeps). Trainable at any depth
-                         because the recursion is only `steps` deep. Used for L/R fits.
+Two forwards, by use:
   * `full_rollout`    -- deep rollout from the constant diagonal (deployment / eval). Not
                          renormalized; forward-only.
   * `full_rollout_selfnorm` -- deep rollout that renormalizes each diagonal to mean 1 during
                          the recursion. For a scale-free (O/E) loss this is loss-neutral
                          (the per-diagonal scale is a free gauge), but it prevents the
                          underflow/floor-clipping that destroys deep gradients -- so the full
-                         rollout itself becomes trainable in O(band) memory.
+                         rollout itself becomes trainable in O(band) memory. Used for L/R fits.
 """
 import functools
 
@@ -95,39 +93,3 @@ def full_rollout_selfnorm(L, R, s, rows):
 
     (_, _), tail = lax.scan(jax.checkpoint(body), (init, L), xs=jnp.arange(1, rows))
     return jnp.vstack([init[None], tail])
-
-
-# --------------------------------------------------------------------------------------
-# Teacher-forced shallow refine (training)
-# --------------------------------------------------------------------------------------
-@functools.partial(jax.jit, static_argnames=("steps", "start_row"))
-def teacher_forced(obs, L, R, s, steps, start_row):
-    """Seed from the observed band and apply the recursion `steps` times.
-
-    Per-sweep gradient checkpointing keeps memory O(band) for deep/many-step fits.
-    """
-    L, R = _clip_LR(L, R)
-    D = obs.shape[0]
-    rolls = vmap_roll(L, D)  # rolls[t] = roll(L, t) -- left anchor, rolled with k
-    upd = jnp.arange(D)[:, None] >= start_row
-
-    def sweep(band, _):
-        prev = band[:-1]
-        Lk = rolls[: D - 1]
-        p1, p2 = prev[:, :-1], prev[:, 1:]
-        r_in, r_out = R[:-1], R[1:]
-        l_in, l_out = Lk[:, 1:], Lk[:, :-1]
-        num = r_in * p1 + l_in * p2
-        den = jnp.maximum(r_out + l_out + s, 1e-4)
-        new = jnp.maximum(num / den, 1e-6)
-        rows1 = jnp.concatenate([jnp.ones((D - 1, 1), band.dtype), new], 1)
-        cand = jnp.concatenate([band[:1], rows1], 0)
-        out = jnp.where(upd, cand, band).at[:, 0].set(1.0)
-        return out, None
-
-    final, _ = lax.scan(jax.checkpoint(sweep), obs, xs=None, length=steps)
-    return final
-
-
-def vmap_roll(v, D):
-    return jax.vmap(lambda sh: jnp.roll(v, sh))(jnp.arange(D))
