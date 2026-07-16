@@ -13,5 +13,5 @@ def example_cool():
 
 @pytest.fixture(scope="session")
 def example_ctcf_tsv():
-    """CTCF+/- track for the same window (docs/data/create_example_ctcf.py)."""
+    """CTCF+/- track for the same window as example_cool (docs/data/example_ctcf.tsv)."""
     return os.path.join(REPO_ROOT, "docs", "data", "example_ctcf.tsv")
