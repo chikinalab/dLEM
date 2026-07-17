@@ -46,5 +46,4 @@ services:
     image: dlem-dev
     container_name: dlem-test
     user: root
-    command: >
-      pixi run --environment dev pytest -k "test_dlem_drem_small or test_dlem_drem_medium or test_dlem_synthetic"
+    command: pixi run --environment dev pytest

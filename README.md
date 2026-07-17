@@ -58,7 +58,13 @@ SPDX-License-Identifier: MIT
 ---
 
 # Differentiable Loop Extrusion Model
-This package provides functions to train, predict, and evaluate a Differentiable Loop Extrusion Model (DLEM) on HiC/Micro-C experiments. Take chromatin conformation data in (m)cool format and calculate L and R cohesin rate parameters.
+This package provides functions to train, predict, and evaluate a Differentiable Loop Extrusion Model (dLEM) on HiC/Micro-C experiments. Take chromatin conformation data in (m)cool format and calculate L and R cohesin rate parameters.
+
+<p align="center">
+  <img src="docs/quick_start_patch.png" width="600" alt="dLEM fit vs. Micro-C data, with the fitted L/R extrusion-barrier tracks flanking the contact map">
+</p>
+
+<p align="center"><sub>Upper triangle: observed Micro-C. Lower triangle: dLEM's prediction from the fitted <code>L</code>/<code>R</code> tracks shown alongside.</sub></p>
 
 ## Installation
 Requires Python 3.11–3.13
@@ -117,6 +123,13 @@ $ dlem docs/data/example_chr10.cool /tmp/out \
     --ctcf-tsv docs/data/example_ctcf.tsv --plot --plot-span 200
 ```
 
+`--ctcf-tsv` reports how well the fitted barrier strength, `(1-L)+(1-R)`, lines up with
+independent CTCF ChIP-seq signal at the same locus:
+
+<p align="center">
+  <img src="docs/quick_start_barrier_ctcf.png" width="600" alt="Fitted barrier strength (1-L)+(1-R) overlaid with CTCF ChIP-seq signal at the same locus">
+</p>
+
 ### Docker usage
 `docker run ghcr.io/dborgesr/dlem:latest`
 
@@ -135,16 +148,17 @@ $ dlem docs/data/example_chr10.cool /tmp/out \
 
 If you use dLEM or any of its language bindings in your research, please cite the following publication:
 
-Tina Subic, Tŭgrul Balcı, Kristina Perevoshchikova, Geoffrey Fudenberg, Maria Chikina.
+Tina Subic, Ali Tuğrul Balcı, Kristina Perevoshchikova, Diego Borges-Rivera, Jieni Hu,
+Geoffrey Fudenberg, Jacqueline Dresch, Maria Chikina.
 **Mechanistic Genome Folding at Scale through the Differentiable Loop Extrusion Model.**
-_Biorxiv_, [https://www.biorxiv.org/content/10.1101/2025.10.17.682904v1](https://www.biorxiv.org/content/10.1101/2025.10.17.682904v1)
+_Biorxiv_, [https://www.biorxiv.org/content/10.1101/2025.10.17.682904v2](https://www.biorxiv.org/content/10.1101/2025.10.17.682904v2)
 
 <details>
 <summary>BibTex</summary>
 
 ```bibtex
 @article{dlem,
-    author = {Tina Subic, Tŭgrul Balcı, Kristina Perevoshchikova, Geoffrey Fudenberg, Maria Chikina},
+    author = {Tina Subic and Ali Tuğrul Balcı and Kristina Perevoshchikova and Diego Borges-Rivera and Jieni Hu and Geoffrey Fudenberg and Jacqueline Dresch and Maria Chikina},
     title = "{dlem: diffrentiable loop extrusion model for chromatin looping data}",
     journal = {Biorxiv},
     volume = {40},
@@ -155,7 +169,7 @@ _Biorxiv_, [https://www.biorxiv.org/content/10.1101/2025.10.17.682904v1](https:/
     issn = {1367-4811},
     doi = {10.1101/2025.10.17.682904},
     url = {https://doi.org/10.1101/2025.10.17.682904},
-    eprint = {https://www.biorxiv.org/content/10.1101/2025.10.17.682904v1.full.pdf},
+    eprint = {https://www.biorxiv.org/content/10.1101/2025.10.17.682904v2.full.pdf},
 }
 ```
 
