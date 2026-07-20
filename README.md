@@ -58,7 +58,13 @@ SPDX-License-Identifier: MIT
 ---
 
 # Differentiable Loop Extrusion Model
-This package provides functions to train, predict, and evaluate a Differentiable Loop Extrusion Model (DLEM) on HiC/Micro-C experiments. Take chromatin conformation data in (m)cool format and calculate L and R cohesin rate parameters.
+This package provides functions to train, predict, and evaluate a Differentiable Loop Extrusion Model (dLEM) on HiC/Micro-C experiments. Take chromatin conformation data in (m)cool format and calculate L and R cohesin rate parameters.
+
+<p align="center">
+  <img src="docs/quick_start_patch.png" width="600" alt="dLEM fit vs. Micro-C data, with the fitted L/R extrusion-barrier tracks flanking the contact map">
+</p>
+
+<p align="center"><sub>Upper triangle: observed Micro-C. Lower triangle: dLEM's prediction from the fitted <code>L</code>/<code>R</code> tracks shown alongside.</sub></p>
 
 ## Installation
 Requires Python 3.11–3.13
@@ -73,7 +79,8 @@ Refer to the [Installation](https://chikinalab.github.io/dLEM/installation) sect
 
 **`dLEM`**
 
-dLEM: differentiable Loop Extrusion Model
+dLEM: differentiable Loop Extrusion Model. Fits `L`/`R` extrusion-barrier tracks to a
+single chromosome/region and reports mse/corr (+ optional CTCF alignment / plot).
 
 **Usage**:
 
@@ -83,39 +90,45 @@ $ dlem [OPTIONS] DNA_INTS OUTPUT_LOCATION
 
 **Arguments**:
 
-* `DNA_INTS`: Chromatin input dataset in the form of a .(m)cool file  [required]
-* `OUTPUT_LOCATION`: Location of output directory, will be created if not existing  [required]
+* `DNA_INTS`: Path to a .cool file, or a .mcool file (use `--resolution`)  [required]
+* `OUTPUT_LOCATION`: Output directory, will be created if not existing  [required]
 
 **Options**:
 
-* `--device [gpu|cpu|tpu]`: Select computation device: gpu, cpu, or tpu  [default: cpu]
-* `-r, --region TEXT`: Train on a specific chromosomal region (ex: chr16:51906425-55560999)
-* `-b, --bed TEXT`: Plot and output tsv for all regions in BED file,
-3 columns , ex:
-* `--chromosomes COMMA_LIST_PARSER`: Comma-separated list of chromosomes to train on (e.g., &#x27;chr1,chr2,chr3&#x27;)
-* `--all`: Run dLEM across all chromosomes in input cool file
-* `-l, --resolution INTEGER`: Resolution to pull .cool file from .mcool file, must exist
-* `--start-diag INTEGER`: Diagonal offset where updates start during training  [default: 5]
-* `--train-rows INTEGER`: Number of diagonals to use during training dLEM  [default: 170]
-* `--steps INTEGER`: Number of steps for training  [default: 10]
-* `-w, --window-size INTEGER`: Column window size for slowdown fitting  [default: 3000]
-* `-s, --window-step INTEGER`: Step between slowdown-fitting windows  [default: 200]
-* `-d, --decay-extent INTEGER`: Number of band rows to use when fitting slowdown  [default: 500]
-* `-i, --iterations INTEGER`: Number of iterations to fit the model over  [default: 300]
-* `-lr, --lr FLOAT`: Change speed of parameter tuning, useful if loss is too fast/slow or model not converging  [default: 0.01]
-* `-pm, --prediction-mode [mse|corr|final]`: Which parameter set to use for predictions  [default: mse]
-* `-esm, --early-stop-metric [mse|corr|none]`: Metric for early stopping  [default: mse]
-* `--debug`: Enable debug mode
-* `-pr, --prediction-rows INTEGER`: Number of diagonals to predict with using dLEM model  [default: 700]
-* `-c, --output-cool`: Output the prediction as a .cool file
-* `-t, --output-tracks`: Output the parameters as genomic tracks in BED and BigWig format
-* `--norm`: Normalize the predicted band. When set geometric mean is used, otherwise no normalization
-* `-p, --plot`: Plot fits to compare to input
-* `--install-completion`: Install completion for the current shell.
-* `--show-completion`: Show completion for the current shell, to copy it or customize the installation.
-* `--help`: Show this message and exit.
+* `-c, --chrom TEXT`: Chromosome to load (`dlem.load_band`'s `chrom`)  [required]
+* `-res, --resolution INTEGER`: Bin resolution in bp  [required]
+* `-w, --width INTEGER`: Band depth (diagonals) to load  [default: 200]
+* `--train-to INTEGER`: Diagonals to fit (default: `--width`)
+* `-s, --slowdown FLOAT`: dLEM slowdown constant (per-bin)  [default: 0.025]
+* `--importance-power FLOAT`: Within-diagonal emphasis on high-mass bins  [default: 0.0]
+* `--diag-weight-power FLOAT`: Between-diagonal weighting by mass^power  [default: 1.0]
+* `--n-opt INTEGER`: Adam optimization steps  [default: 1500]
+* `--monitor TEXT`: Checkpoint to select: mse|corr|loss|symm|symm2  [default: symm2]
+* `--ctcf-tsv PATH`: Comp-table TSV (`dlem.load_ctcf_tsv` format) to report CTCF alignment against
+* `--plot`: Save a data-vs-prediction PNG (`prediction.png`)
+* `--plot-start INTEGER`: Plot window start (bins)  [default: 0]
+* `--plot-span INTEGER`: Plot window span (bins); default: `--train-to`
+* `-v, --verbose`: Print optimization progress
+* `--help`: Show this message and exit
 
-Refer to the [Quickstart (CLI)](https://chikinalab.github.io/dLEM/cli_usage) and [CLI Reference](https://chikinalab.github.io/dLEM/cli_reference) sections in the documentation for more details.
+This is a single-chromosome/region tool -- it does not do genome-wide batch fitting,
+bigWig track output, or predicted-`.cool` output; use the `dlem` library directly (see
+`docs/quick_start.ipynb`) for anything beyond one region.
+
+**Example** (against the bundled example data):
+
+```console
+$ dlem docs/data/example_chr10.cool /tmp/out \
+    --chrom ref_region --resolution 10000 --width 700 --train-to 200 \
+    --ctcf-tsv docs/data/example_ctcf.tsv --plot --plot-span 200
+```
+
+`--ctcf-tsv` reports how well the fitted barrier strength, `(1-L)+(1-R)`, lines up with
+independent CTCF ChIP-seq signal at the same locus:
+
+<p align="center">
+  <img src="docs/quick_start_barrier_ctcf.png" width="600" alt="Fitted barrier strength (1-L)+(1-R) overlaid with CTCF ChIP-seq signal at the same locus">
+</p>
 
 ### Docker usage
 `docker run ghcr.io/dborgesr/dlem:latest`
@@ -135,15 +148,17 @@ Refer to the [Quickstart (CLI)](https://chikinalab.github.io/dLEM/cli_usage) and
 
 If you use dLEM or any of its language bindings in your research, please cite the following publication:
 
-Tina Subic, Tŭgrul Balcı, Kristina Perevoshchikova, Geoffrey Fudenberg, Maria Chikina, Mechanistic Genome Folding at Scale through the Differentiable Loop Extrusion Model
-_Biorxiv_, [https://www.biorxiv.org/content/10.1101/2025.10.17.682904v1](https://www.biorxiv.org/content/10.1101/2025.10.17.682904v1)
+Tina Subic, Ali Tuğrul Balcı, Kristina Perevoshchikova, Diego Borges-Rivera, Jieni Hu,
+Geoffrey Fudenberg, Jacqueline Dresch, Maria Chikina.
+**Mechanistic Genome Folding at Scale through the Differentiable Loop Extrusion Model.**
+_Biorxiv_, [https://www.biorxiv.org/content/10.1101/2025.10.17.682904v2](https://www.biorxiv.org/content/10.1101/2025.10.17.682904v2)
 
 <details>
 <summary>BibTex</summary>
 
 ```bibtex
 @article{dlem,
-    author = {Tina Subic, Tŭgrul Balcı, Kristina Perevoshchikova, Geoffrey Fudenberg, Maria Chikina},
+    author = {Tina Subic and Ali Tuğrul Balcı and Kristina Perevoshchikova and Diego Borges-Rivera and Jieni Hu and Geoffrey Fudenberg and Jacqueline Dresch and Maria Chikina},
     title = "{dlem: diffrentiable loop extrusion model for chromatin looping data}",
     journal = {Biorxiv},
     volume = {40},
@@ -154,7 +169,7 @@ _Biorxiv_, [https://www.biorxiv.org/content/10.1101/2025.10.17.682904v1](https:/
     issn = {1367-4811},
     doi = {10.1101/2025.10.17.682904},
     url = {https://doi.org/10.1101/2025.10.17.682904},
-    eprint = {https://www.biorxiv.org/content/10.1101/2025.10.17.682904v1.full.pdf},
+    eprint = {https://www.biorxiv.org/content/10.1101/2025.10.17.682904v2.full.pdf},
 }
 ```
 
